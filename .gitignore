@@ -33,3 +33,28 @@ obj/
 *.log
 *.pdb
 
+# Ignore user-specific IDE configuration files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/shelf/
+.idea/usage.statistics.xml
+.idea/gradle.xml
+.idea/misc.xml
+
+# If using multiple .idea directories (e.g., .idea.backend)
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/dictionaries/
+**/.idea/shelf/
+**/.idea/usage.statistics.xml
+**/.idea/gradle.xml
+**/.idea/misc.xml
+
+# Optionally ignore .iml files if they cause conflicts
+*.iml
+
+# Ignore build output directories
+out/
+build/
+dist/
