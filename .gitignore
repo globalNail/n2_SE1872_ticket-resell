@@ -58,3 +58,6 @@ obj/
 out/
 build/
 dist/
+
+# Ignore appsettings.json files
+appsettings.json
