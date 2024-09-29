@@ -1,0 +1,15 @@
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\bin\Debug\net8.0\Repository.deps.json
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\bin\Debug\net8.0\Repository.runtimeconfig.json
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\bin\Debug\net8.0\Repository.dll
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\bin\Debug\net8.0\Repository.pdb
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.csproj.AssemblyReference.cache
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.AssemblyInfoInputs.cache
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.AssemblyInfo.cs
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.csproj.CoreCompileInputs.cache
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.sourcelink.json
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.dll
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\refint\Repository.dll
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.pdb
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\Repository.genruntimeconfig.cache
+E:\srccode\ticket-resell\n2_SE1872_ticket-resell\backend\Repository\obj\Debug\net8.0\ref\Repository.dll
