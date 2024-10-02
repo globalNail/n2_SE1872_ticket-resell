@@ -1,13 +1,15 @@
-﻿namespace Repository.Base;
+﻿using Repository.Context;
+
+namespace Repository.Base;
 using Microsoft.EntityFrameworkCore;
 
 public class GenericRepository<T> where T : class
     {
-        protected Swp391ticketResellPlatformV3Context _context;
+        protected Swp391TicketResellPlatformV3Context _context;
 
-        public GenericRepository() => _context ??= new Swp391ticketResellPlatformV3Context();        
+        public GenericRepository() => _context ??= new Swp391TicketResellPlatformV3Context();        
 
-        public GenericRepository(Swp391ticketResellPlatformV3Context context) => _context = context;        
+        public GenericRepository(Swp391TicketResellPlatformV3Context context) => _context = context;        
         public List<T> GetAll()
         {
             return _context.Set<T>().ToList();

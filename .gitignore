@@ -42,15 +42,6 @@ obj/
 .idea/gradle.xml
 .idea/misc.xml
 
-# If using multiple .idea directories (e.g., .idea.backend)
-**/.idea/workspace.xml
-**/.idea/tasks.xml
-**/.idea/dictionaries/
-**/.idea/shelf/
-**/.idea/usage.statistics.xml
-**/.idea/gradle.xml
-**/.idea/misc.xml
-
 # Optionally ignore .iml files if they cause conflicts
 *.iml
 
@@ -59,5 +50,3 @@ out/
 build/
 dist/
 
-# Ignore appsettings.json files
-appsettings.json
