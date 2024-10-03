@@ -1,0 +1,44 @@
+# Ticket Resell
+
+> SWP391 project
+
+## Overview
+
+
+## Technologies
+
+## Features
+
+## Database
+
+<details>
+  <summary>Database</summary>
+
+  <div style="margin-top: 20px">
+    <a href="https://github.com/globalNail/n2_SE1872_ticket-resell">
+      <img src="database/database.svg"/>
+    </a>
+  </div>
+</details>
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="20%"><a href="https://github.com/globalNail"><img src="https://avatars.githubusercontent.com/u/157128098?v=4" width="100px;" alt=""/><br /><sub><b>Khanh Tien</b></sub></a></td>
+      <td align="center" valign="top" width="20%"><a href="https://github.com/nhatmac21"><img src="https://avatars.githubusercontent.com/u/153983407?v=4" width="100px;" alt=""/><br /><sub><b>Nhat Mac</b></sub></a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="20%"><a href="https://allcontributors.org"><img src="https://avatars.githubusercontent.com/u/46410174?v=4" width="100px;" alt=""/><br /><sub><b>All Contributors</b></sub></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
