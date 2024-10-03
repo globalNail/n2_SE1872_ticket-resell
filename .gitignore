@@ -44,7 +44,7 @@ build/
 dist/
 
 n2_SE1872_ticket-resell.git/
-.gitignore
+**/appsettings*.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/react,aspnetcore,visualstudiocode,jetbrains+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,aspnetcore,visualstudiocode,jetbrains+all
