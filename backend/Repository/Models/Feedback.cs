@@ -17,6 +17,8 @@ public partial class Feedback
 
     public string? Comment { get; set; }
 
+    public DateTime? CreateDate { get; set; }
+
     public virtual User? Buyer { get; set; }
 
     public virtual User? Seller { get; set; }

@@ -7,7 +7,7 @@ public partial class Order
 {
     public int OrderId { get; set; }
 
-    public int? UserId { get; set; }
+    public int? BuyerId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
@@ -15,9 +15,9 @@ public partial class Order
 
     public decimal? TotalAmount { get; set; }
 
+    public virtual User? Buyer { get; set; }
+
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual Transaction? Transaction { get; set; }
-
-    public virtual User? User { get; set; }
 }

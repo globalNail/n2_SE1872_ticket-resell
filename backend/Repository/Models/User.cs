@@ -27,6 +27,8 @@ public partial class User
 
     public int? WalletId { get; set; }
 
+    public virtual Business? Business { get; set; }
+
     public virtual ICollection<Feedback> FeedbackBuyers { get; set; } = new List<Feedback>();
 
     public virtual ICollection<Feedback> FeedbackSellers { get; set; } = new List<Feedback>();
@@ -34,6 +36,8 @@ public partial class User
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual UserRole? Role { get; set; }
+
+    public virtual Staff? Staff { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 

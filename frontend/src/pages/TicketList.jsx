@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllTickets } from "../services/ticketApi";
+import { getAllTickets } from "../services/TicketApi";
 import TicketCard from "../componets/ticket/TicketCard";
 
 const TicketListPage = () => {

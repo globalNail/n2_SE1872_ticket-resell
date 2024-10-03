@@ -33,7 +33,9 @@ const LoginModal = ({ onClose }) => {
         setEmailLoading(true);
         setError(null);
         try {
-            const response = await axios.post("/auth/login", {
+            const response = await axios.post("/auth/login"
+                    // `${import.meta.env.VITE_API_URL}/api/auth/login`,
+                , {
                 email: email,
                 password: password,
             });

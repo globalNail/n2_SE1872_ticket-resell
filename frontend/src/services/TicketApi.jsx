@@ -1,4 +1,4 @@
-import api from "./axios";
+import api from "./Axios";
 // Get all tickets
 export const getAllTickets = async () => {
     const response = await api.get("/Ticket");

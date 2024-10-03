@@ -50,3 +50,6 @@ out/
 build/
 dist/
 
+.idea
+n2_SE1872_ticket-resell.git
+.gitignore

@@ -1,6 +1,6 @@
 // src/components/Login.tsx
 import React from "react";
-import { auth, googleProvider } from "../../services/firebase";
+import { auth, googleProvider } from "../../services/Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 function Login() {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Repository.Context;
 using Repository.Models;
 
 namespace API.Controllers
@@ -10,9 +9,9 @@ namespace API.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly Swp391TicketResellPlatformV3Context _context;
+        private readonly Swp391ticketResellPlatformContext _context;
 
-        public TicketController(Swp391TicketResellPlatformV3Context context)
+        public TicketController(Swp391ticketResellPlatformContext context)
         {
             _context = context;
         }

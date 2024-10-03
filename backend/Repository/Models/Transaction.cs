@@ -15,6 +15,12 @@ public partial class Transaction
 
     public string? PaymentMethod { get; set; }
 
+    public decimal? PlatformFee { get; set; }
+
+    public decimal? Discount { get; set; }
+
+    public decimal? NetAmount { get; set; }
+
     public string? Status { get; set; }
 
     public virtual Order? Order { get; set; }
