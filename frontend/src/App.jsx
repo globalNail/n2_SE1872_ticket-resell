@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UpTicket from "./pages/UpTicket";  // Sửa lại import
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -32,13 +33,10 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/tickets" element={<TicketList />} />
-                            <Route
-                                path="/tickets/:id"
-                                element={<TicketDetails />}
-                            />
-                            {/* <Route path="/sell" element={<SellTicket />} /> */}
+                            <Route path="/tickets/:id" element={<TicketDetails />} />
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/profile" element={<Profile />} />
+                            <Route path="/UpTicket" element={<UpTicket />} /> {/* Thêm route cho UpTicket */}
 
                             {/* Protected Admin Route */}
                             <Route
