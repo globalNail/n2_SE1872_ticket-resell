@@ -6,7 +6,10 @@
 
 
 ## Technologies
-
+ - ASP.NET
+ - React
+ - Tailwind
+ - MS SQL Server
 ## Features
 
 ## Database
