@@ -4,6 +4,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
+import StaffApproval from "./pages/verify/StaffApproval";
 import TicketList from "./components/ticket/TicketList";
 import TicketDetails from "./pages/TicketDetails";
 import LoginModal from "./components/LoginModal";
@@ -37,7 +38,7 @@ function App() {
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/UpTicket" element={<UpTicket />} /> {/* Thêm route cho UpTicket */}
-
+                            <Route path="/staff-approval" Component={StaffApproval}/>
                             {/* Protected Admin Route */}
                             <Route
                                 path="/admin"
@@ -67,3 +68,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Sử dụng useNavigate để chuyển hướng
 
 function UpTicket() {
     const [barcode, setBarcode] = useState('');
@@ -7,10 +8,19 @@ function UpTicket() {
     const [seatNumber, setSeatNumber] = useState('');
     const [categoryID, setCategoryID] = useState('');
     const [pdfFile, setPdfFile] = useState(null);
+    const [message, setMessage] = useState(''); // Để hiển thị thông báo sau khi submit
+
+    const navigate = useNavigate(); // Khởi tạo hook để chuyển hướng
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic (e.g., API call to save the ticket details)
+
+        // Kiểm tra các trường không được để trống
+        if (!barcode || !price || !quantity || !seatNumber || !categoryID || !pdfFile) {
+            setMessage('Please fill in all required fields.');
+            return;
+        }
+
         const ticketData = {
             barcode,
             price,
@@ -20,7 +30,18 @@ function UpTicket() {
             pdfFile
         };
 
-        console.log(ticketData); // In production, replace with API call
+        // Giả sử bạn lưu thông tin vé vào localStorage
+        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+        tickets.push(ticketData);
+        localStorage.setItem('tickets', JSON.stringify(tickets));
+
+        // In production, replace with an API call
+        console.log("Ticket submitted:", ticketData);
+        
+        // Hiển thị thông báo thành công
+        setMessage('Ticket submitted successfully! Redirecting to staff approval page...');
+
+       
     };
 
     const handleFileChange = (e) => {
@@ -30,6 +51,7 @@ function UpTicket() {
     return (
         <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6">Upload Your Ticket</h1>
+            {message && <p className="text-green-500">{message}</p>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="barcode" className="block font-semibold">Barcode</label>
@@ -64,6 +86,7 @@ function UpTicket() {
                         onChange={(e) => setQuantity(e.target.value)}
                         className="border p-2 w-full"
                         min="1"
+                        required
                     />
                 </div>
 
@@ -75,6 +98,7 @@ function UpTicket() {
                         value={seatNumber}
                         onChange={(e) => setSeatNumber(e.target.value)}
                         className="border p-2 w-full"
+                        required
                     />
                 </div>
 
@@ -91,7 +115,6 @@ function UpTicket() {
                         <option value="1">Concert</option>
                         <option value="2">Sports</option>
                         <option value="3">Theater</option>
-                        {/* Add more categories as needed */}
                     </select>
                 </div>
 
@@ -103,6 +126,7 @@ function UpTicket() {
                         onChange={handleFileChange}
                         accept=".pdf"
                         className="border p-2 w-full"
+                        required
                     />
                 </div>
 
