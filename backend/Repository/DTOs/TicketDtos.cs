@@ -1,0 +1,35 @@
+﻿using Repository.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repository.DTOs
+{
+    public class TicketDtos
+    {
+
+        public string Barcode { get; set; } = null!;
+
+        public decimal Price { get; set; }
+
+        public int? Quantity { get; set; }
+
+        public string? SeatNumber { get; set; }
+
+        public int? SellerId { get; set; }
+
+        public int? CategoryId { get; set; }
+
+        public byte[]? PdfFile { get; set; }
+
+        public string? Status { get; set; }
+     
+        public int? ApprovedBy { get; set; }
+
+        public DateTime? ApprovalDate { get; set; }
+
+        public string? ProcessingNotes { get; set; }
+    }
+}
