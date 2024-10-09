@@ -22,14 +22,9 @@ namespace Repository.DTOs
 
         public int? CategoryId { get; set; }
 
-        public byte[]? PdfFile { get; set; }
-
-        public string? Status { get; set; }
-     
-        public int? ApprovedBy { get; set; }
-
-        public DateTime? ApprovalDate { get; set; }
-
+        public string? PdfFile { get; set; }
+         
         public string? ProcessingNotes { get; set; }
+    
     }
 }

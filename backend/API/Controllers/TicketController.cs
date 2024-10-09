@@ -23,15 +23,15 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Ticket>> AddTicket(TicketDtos ticketDtos)
         {
-            try
-            {
+            //try
+            //{
                 var result = await _services.AddTicket(ticketDtos);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
 
         //Read
@@ -76,16 +76,16 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateTicket(int id, TicketUpdatedtos ticketUpdatedtos)
         {
-            try
-            {
+            //try
+            //{
 
                 var result = await _services.UpdateTicket(id, ticketUpdatedtos);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
 
         // DELETE
