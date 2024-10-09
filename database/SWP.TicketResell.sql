@@ -26,17 +26,19 @@ CREATE TABLE [User] (
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
     ImageUrl NVARCHAR(150),
-    AverageRating DECIMAL(3,2) DEFAULT 0.00,
-    RatingCount INT DEFAULT 0,
     RoleID INT,
     WalletID INT,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (RoleID) REFERENCES UserRole(RoleID)
 );
 CREATE TABLE Member (
     MemberID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT UNIQUE,  -- Link Member to User
+    UserID INT UNIQUE,
+    AverageRating DECIMAL(3,2) DEFAULT 0.00,
+    RatingCount INT DEFAULT 0,
     MembershipDate DATETIME DEFAULT GETDATE(),
     MembershipStatus NVARCHAR(50) DEFAULT 'Active'CHECK (MembershipStatus IN ('Active', 'Inactive')),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (UserID) REFERENCES [User](UserID)
 );
 
@@ -44,6 +46,7 @@ CREATE TABLE Staff (
     StaffID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT UNIQUE,
     Role NVARCHAR(50) NOT NULL,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (UserID) REFERENCES [User](UserID)
 );
 
@@ -51,19 +54,22 @@ CREATE TABLE Wallet (
     WalletID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT UNIQUE,
     Balance DECIMAL(10,2) DEFAULT 0.00,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (UserID) REFERENCES [User](UserID)
 );
 
 CREATE TABLE Category (
     CategoryID INT IDENTITY(1,1) PRIMARY KEY,
-    CategoryName NVARCHAR(100) NOT NULL
+    CategoryName NVARCHAR(100) NOT NULL,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
 );
 CREATE TABLE ServicePackage (
     PackageID INT IDENTITY(1,1) PRIMARY KEY,
     PackageName NVARCHAR(100) NOT NULL,
     Description NVARCHAR(MAX),
     Fee DECIMAL(10,2) NOT NULL,
-    DiscountPercentage DECIMAL(5,2) DEFAULT 0.00
+    DiscountPercentage DECIMAL(5,2) DEFAULT 0.00,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
 );
 
 CREATE TABLE Business(
@@ -76,9 +82,9 @@ CREATE TABLE Business(
     Status NVARCHAR(50) DEFAULT 'Pending',
     CanSkipVerification BIT DEFAULT 0,
     IsAgent BIT DEFAULT 0,
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (UserID) REFERENCES [User](UserID),
     FOREIGN KEY (PackageID) REFERENCES ServicePackage(PackageID)
-
 );
 CREATE TABLE Ticket (
     TicketID INT IDENTITY(1,1) PRIMARY KEY,
@@ -88,13 +94,14 @@ CREATE TABLE Ticket (
     SeatNumber NVARCHAR(10),
     SellerID INT,
     CategoryID INT,
-    PdfFile VARBINARY(MAX),
+    PdfFile NVARCHAR(100),
     Status NVARCHAR(50) DEFAULT 'pending' CHECK (Status IN ('pending', 'verified', 'rejected', 'sold')),
     PostedAt DATETIME DEFAULT GETDATE(),
     ApprovedBy INT NULL,
     ApprovalDate DATETIME NULL,
     ProcessingNotes NVARCHAR(MAX),
-FOREIGN KEY (SellerID) REFERENCES Member(MemberID),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
+    FOREIGN KEY (SellerID) REFERENCES Member(MemberID),
     FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
     FOREIGN KEY (ApprovedBy) REFERENCES Staff(StaffID),
 );
@@ -105,7 +112,8 @@ CREATE TABLE Orders (
     CreatedAt DATETIME DEFAULT GETDATE(),
     Status NVARCHAR(50) DEFAULT 'open' CHECK (Status IN ('open', 'completed', 'cancelled')),
     TotalAmount DECIMAL(10,2),
-FOREIGN KEY (BuyerID) REFERENCES Member(MemberID)
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
+    FOREIGN KEY (BuyerID) REFERENCES Member(MemberID)
 );
 
 CREATE TABLE OrderItem (
@@ -116,6 +124,7 @@ CREATE TABLE OrderItem (
     UnitPrice DECIMAL(10,2),
     TotalPrice AS (Quantity * UnitPrice) PERSISTED,
     AddedAt DATETIME DEFAULT GETDATE(),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
 );
@@ -130,6 +139,7 @@ CREATE TABLE [Transaction] (
     Discount DECIMAL(10,2) DEFAULT 0.00,
     NetAmount DECIMAL(10,2) DEFAULT 0.00,
     Status NVARCHAR(50) DEFAULT 'processing' CHECK (Status IN ('processing', 'completed', 'refunded')),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
@@ -140,6 +150,7 @@ CREATE TABLE TransactionProcess (
     Status NVARCHAR(50) DEFAULT 'initiated' CHECK (Status IN ('initiated', 'in_process', 'completed', 'cancelled')),
     UpdatedAt DATETIME DEFAULT GETDATE(),
     Notes NVARCHAR(MAX),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (TransactionID) REFERENCES [Transaction](TransactionID),
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
 );
@@ -152,8 +163,9 @@ CREATE TABLE Feedback (
     Rating INT CHECK (Rating BETWEEN 1 AND 5),
     Comment NVARCHAR(MAX),
     CreateDate DATETIME DEFAULT GETDATE(),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (BuyerID) REFERENCES Member(MemberID),
-FOREIGN KEY (SellerID) REFERENCES Member(MemberID),
+    FOREIGN KEY (SellerID) REFERENCES Member(MemberID),
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
 );
 
