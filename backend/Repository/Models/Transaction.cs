@@ -23,6 +23,8 @@ public partial class Transaction
 
     public string? Status { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual Order? Order { get; set; }
 
     public virtual ICollection<TransactionProcess> TransactionProcesses { get; set; } = new List<TransactionProcess>();

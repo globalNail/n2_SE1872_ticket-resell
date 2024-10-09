@@ -23,6 +23,8 @@ public partial class Business
 
     public bool? IsAgent { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual ServicePackage? Package { get; set; }
 
     public virtual User? User { get; set; }
