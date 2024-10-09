@@ -9,6 +9,7 @@ public class TicketRepository : ITicketRepository
 {
     private readonly Swp391ticketResellPlatformContext _context;
 
+
     public TicketRepository(Swp391ticketResellPlatformContext context)
     {
         _context = context;

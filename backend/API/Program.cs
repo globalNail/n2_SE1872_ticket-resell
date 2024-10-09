@@ -1,3 +1,5 @@
+
+using API.Injection;
 using Repository.Interfaces;
 using Repository.Models;
 using Repository.Repositories;
@@ -13,6 +15,8 @@ builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ServicesInjection(builder.Configuration);
 builder.Services.AddDbContext<Swp391ticketResellPlatformContext>();
 builder.Services.AddCors(options =>
 {
@@ -41,5 +45,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
 
 app.Run();

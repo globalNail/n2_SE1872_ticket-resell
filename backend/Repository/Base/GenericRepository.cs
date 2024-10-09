@@ -3,127 +3,103 @@ using Repository.Models;
 
 namespace Repository.Base;
 using Microsoft.EntityFrameworkCore;
+using Repository.Interfaces;
+using System.Linq.Expressions;
 
-public class GenericRepository<T> where T : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+{
+    protected Swp391ticketResellPlatformContext _context;
+    protected DbSet<TEntity> _dbSet;
+
+    public GenericRepository(Swp391ticketResellPlatformContext context)
     {
-        protected Swp391ticketResellPlatformContext _context;
+        _context = context;
+        _dbSet = context.Set<TEntity>();
+    }
 
-        public GenericRepository() => _context ??= new Swp391ticketResellPlatformContext();
+    public virtual IEnumerable<TEntity> Get(
+       Expression<Func<TEntity, bool>> filter = null,
+       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+       string includeProperties = "",
+       int? pageIndex = null,
+       int? pageSize = null)
+    {
+        IQueryable<TEntity> query = _dbSet;
 
-        public GenericRepository(Swp391ticketResellPlatformContext context) => _context = context;
-        public List<T> GetAll()
+        if (filter != null)
         {
-            return _context.Set<T>().ToList();
-            //return _context.Set<T>().AsNoTracking().ToList();
+            query = query.Where(filter);
         }
 
-        public void Create(T entity)
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
         {
-            _context.Add(entity);
-            _context.SaveChanges();
+            query = query.Include(includeProperty);
         }
 
-        public void Update(T entity)
+        if (orderBy != null)
         {
-            var tracker = _context.Attach(entity);
-            tracker.State = EntityState.Modified;
-            _context.SaveChanges();
+            query = orderBy(query);
         }
 
-        public bool Remove(T entity)
+        if (pageIndex.HasValue && pageSize.HasValue)
         {
-            _context.Remove(entity);
-            _context.SaveChanges();
-            return true;
+            int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+            int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
+
+            query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
         }
 
-        public T GetById(int id)
+        return query.ToList();
+    }
+
+    public virtual TEntity GetByID(object id)
+    {
+        return _dbSet.Find(id);
+    }
+
+    public virtual void Insert(TEntity entity)
+    {
+        if (entity == null) return;
+        _dbSet.Add(entity);
+    }
+
+    public virtual bool Delete(object id)
+    {
+        TEntity entityToDelete = GetByID(id);
+        if (entityToDelete == null) return false;
+        Delete(entityToDelete);
+        return true;
+    }
+    public virtual bool Update(object id, TEntity entityUpdate)
+    {
+        TEntity entity = GetByID(id);
+        if (entity == null) return false;
+        Update(entityUpdate);
+        return true;
+    }
+
+    public virtual void Delete(TEntity entityToDelete)
+    {
+        if (_context.Entry(entityToDelete).State == EntityState.Detached)
         {
-            return _context.Set<T>().Find(id);
+            _dbSet.Attach(entityToDelete);
         }
+        _dbSet.Remove(entityToDelete);
+    }
 
-        public T GetById(string code)
+    public virtual void Update(TEntity entityToUpdate)
+    {
+        var trackedEntities = _context.ChangeTracker.Entries<TEntity>().ToList();
+        foreach (var trackedEntity in trackedEntities)
         {
-            return _context.Set<T>().Find(code);
+            trackedEntity.State = EntityState.Detached;
         }
-
-        public T GetById(Guid code)
-        {
-            return _context.Set<T>().Find(code);
-        }
-
-        #region Asynchronous
-
-        public async Task<List<T>> GetAllAsync()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-        public async Task<int> CreateAsync(T entity)
-        {
-            _context.Add(entity);
-            return await _context.SaveChangesAsync();
-        }
-        public async Task<int> UpdateAsync(T entity)
-        {
-            var tracker = _context.Attach(entity);
-            tracker.State = EntityState.Modified;
-
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> RemoveAsync(T entity)
-        {
-            _context.Remove(entity);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
-
-        public async Task<T> GetByIdAsync(string code)
-        {
-            return await _context.Set<T>().FindAsync(code);
-        }
-
-        public async Task<T> GetByIdAsync(Guid code)
-        {
-            return await _context.Set<T>().FindAsync(code);
-        }
-
-        #endregion
+        _dbSet.Attach(entityToUpdate);
+        _context.Entry(entityToUpdate).State = EntityState.Modified;
+    }
 
 
-        #region Separating asigned entities and save operators        
-
-        public void PrepareCreate(T entity)
-        {
-            _context.Add(entity);
-        }
-
-        public void PrepareUpdate(T entity)
-        {
-            var tracker = _context.Attach(entity);
-            tracker.State = EntityState.Modified;
-        }
-
-        public void PrepareRemove(T entity)
-        {
-            _context.Remove(entity);
-        }
-
-        public int Save()
-        {
-            return _context.SaveChanges();
-        }
-
-        public async Task<int> SaveAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
-        #endregion Separating asign entity and save operators
 }
+
 
