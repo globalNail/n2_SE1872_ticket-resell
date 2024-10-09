@@ -24,11 +24,9 @@ namespace Service
             {
                 return "Data is null";
             }
-            var listTicket = await _ticketRepository.GetAllTickets();
-            int countTicket = listTicket.Any() ? listTicket.Count + 1 : 1;
+            
             Ticket ticket = new Ticket()
-            {
-                TicketId = countTicket,
+            {             
                 Barcode = ticketDtos.Barcode,
                 Price = ticketDtos.Price,
                 Quantity = ticketDtos.Quantity,
@@ -36,11 +34,12 @@ namespace Service
                 SellerId = ticketDtos.SellerId,
                 CategoryId = ticketDtos.CategoryId,
                 PdfFile = ticketDtos.PdfFile,
-                Status = "Pending",
+                Status = "Verify",
                 PostedAt = DateTime.Now,
                 ApprovedBy = null,
                 ApprovalDate = null,
                 ProcessingNotes = ticketDtos.ProcessingNotes,
+                ModifiedDate = null
             };
             var result = await _ticketRepository.AddTicket(ticket);
             return result ? "Add Successful" : "Add failed";
@@ -110,6 +109,7 @@ namespace Service
             existingTicket.ApprovalDate = DateTime.Now;
             existingTicket.SeatNumber = ticketUpdatedtos.SeatNumber;
             existingTicket.ProcessingNotes = ticketUpdatedtos.ProcessingNotes;
+            existingTicket.ModifiedDate = DateTime.Now;
             var result = await _ticketRepository.UpdateTicket(existingTicket);
             return result ? "Update Successfull" : "Update failed";
         }
