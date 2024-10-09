@@ -36,5 +36,24 @@ namespace Service.ServiceWallet
                 throw ex;
             }
         }
+        public async Task<List<WalletDTOResponse>> GetAllWallet()
+        {
+            try
+            {
+                var listWallet =  _unitOfWork.WalletRepository.Get(
+                    pageIndex : 1,
+                    pageSize : 10
+                    );
+                if(listWallet == null)
+                {
+                    throw new Exception("Not Found Wallets");
+                }
+                var result = _mapper.Map<List<WalletDTOResponse>>(listWallet);
+                return result;
+            }catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

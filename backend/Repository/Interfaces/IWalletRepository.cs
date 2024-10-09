@@ -10,5 +10,6 @@ namespace Repository.Interfaces
     public interface IWalletRepository: IGenericRepository<Wallet>
     {
          Task<Wallet> GetWalletbyUserId(int userId);
+
     }
 }

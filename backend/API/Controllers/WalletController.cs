@@ -36,5 +36,24 @@ namespace API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllWallet()
+        {
+            try
+            {
+                var wallets = await _walletService.GetAllWallet();
+
+
+                var listWalletDTO = _mapper.Map<List<WalletDTOResponse>>(wallets);
+
+                return Ok(ApiResult<List<WalletDTOResponse>>.Succeed(listWalletDTO, "Get all wallet successfully"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

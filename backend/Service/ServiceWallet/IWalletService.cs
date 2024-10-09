@@ -10,5 +10,6 @@ namespace Service.ServiceWallet
     public interface IWalletService
     {
         Task<WalletDTOResponse> GetBalanceByUserId(int userId);
+        Task<List<WalletDTOResponse>> GetAllWallet();
     }
 }
