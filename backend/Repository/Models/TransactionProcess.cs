@@ -17,6 +17,8 @@ public partial class TransactionProcess
 
     public string? Notes { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual Ticket? Ticket { get; set; }
 
     public virtual Transaction? Transaction { get; set; }

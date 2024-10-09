@@ -15,7 +15,9 @@ public partial class Order
 
     public decimal? TotalAmount { get; set; }
 
-    public virtual User? Buyer { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+
+    public virtual Member? Buyer { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 

@@ -19,6 +19,8 @@ public partial class OrderItem
 
     public DateTime? AddedAt { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual Order? Order { get; set; }
 
     public virtual Ticket? Ticket { get; set; }

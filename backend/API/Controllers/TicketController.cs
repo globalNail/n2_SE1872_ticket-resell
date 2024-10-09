@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Repository.DTOs;
 using Repository.Models;
+using Service.Interface;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers
 {
@@ -9,104 +12,111 @@ namespace API.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly Swp391ticketResellPlatformContext _context;
+        private readonly ITicketService _services;
 
-        public TicketController(Swp391ticketResellPlatformContext context)
+        public TicketController(ITicketService ticketService)
         {
-            _context = context;
+            _services = ticketService;
         }
 
         //CRUD
         [HttpPost]
-        public async Task<ActionResult<Ticket>> PostTodoItem(Ticket ticket)
+        public async Task<ActionResult<Ticket>> AddTicket(TicketDtos ticketDtos)
         {
-            _context.Tickets.Add(ticket);
-            await _context.SaveChangesAsync();
-
-            //    return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-            return CreatedAtAction(nameof(Ticket), new { id = ticket.TicketId }, ticket);
-        }
-        
-        //Read
-        
-        [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetAllTickets()
-        {
-            var tickets = await _context.Tickets.ToListAsync();
-            return Ok(tickets);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTodoItem(int id)
-        {
-            var ticket = await _context.Tickets.FindAsync(id);
-
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return ticket;
-        }
-        
-        // UPDATE
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTicket(int id, Ticket ticket)
-        {
-            if (id != ticket.TicketId)
-            {
-                return BadRequest(); // Return BadRequest if ID doesn't match
-            }
-
-            _context.Entry(ticket).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var result = await _services.AddTicket(ticketDtos);
+                return Ok(result);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!TicketExists(id))
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Read
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            try
+            {
+                var result = await _services.GetAllTicket();
+                if (result == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                return Ok(result);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-            return NoContent(); // Return 204 No Content on successful update
+        [HttpGet("id")]
+        public async Task<IActionResult> GetTicketById([Required] int ticketId)
+        {
+            try
+            {
+                var ticket = await _services.GetTicketById(ticketId);
+                if (ticket == null)
+                {
+                    return NotFound();
+                }
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // UPDATE
+        [HttpPut]
+        public async Task<IActionResult> UpdateTicket(int id, TicketUpdatedtos ticketUpdatedtos)
+        {
+            try
+            {
+
+                var result = await _services.UpdateTicket(id, ticketUpdatedtos);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTicket(int id)
+        public async Task<IActionResult> DeleteTicket([Required] int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
-            if (ticket == null)
+            try
             {
-                return NotFound();
+                await _services.DeleteTicket(id);
+                return Ok("delete Success");
             }
-
-            _context.Tickets.Remove(ticket);
-            await _context.SaveChangesAsync();
-
-            return NoContent(); // Return 204 No Content on successful deletion
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // COUNT
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetTicketCount()
         {
-            var count = await _context.Tickets.CountAsync();
-            return Ok(count); // Return the count of tickets
+            try
+            {
+                var count = await _services.CountTicket();
+                return Ok(count); // Return the count of tickets
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // Helper method to check if a ticket exists
-        private bool TicketExists(int id)
-        {
-            return _context.Tickets.Any(e => e.TicketId == id);
-        }
     }
 }

@@ -19,7 +19,7 @@
 
   <div style="margin-top: 20px">
     <a href="https://github.com/globalNail/n2_SE1872_ticket-resell">
-      <img src="database/database.svg"/>
+      <img src="database/database.png"/>
     </a>
   </div>
 </details>

@@ -1,14 +1,23 @@
+
 using API.Injection;
+using Repository.Interfaces;
 using Repository.Models;
+using Repository.Repositories;
+using Service;
+using Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ITicketService, TicketServices>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.ServicesInjection(builder.Configuration);
+builder.Services.AddDbContext<Swp391ticketResellPlatformContext>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
