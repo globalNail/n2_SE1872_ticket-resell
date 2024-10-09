@@ -1,3 +1,4 @@
+using API.Injection;
 using Repository.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,9 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<Swp391ticketResellPlatformContext>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.ServicesInjection(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -23,11 +24,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors("AllowReactApp");
 app.UseHttpsRedirection();
@@ -35,5 +36,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
 
 app.Run();

@@ -6,7 +6,11 @@ namespace Repository.Repositories;
 
 public class TicketRepository : GenericRepository<Ticket>
 {
-    public TicketRepository(Swp391ticketResellPlatformContext context) => _context = context;
+    private readonly Swp391ticketResellPlatformContext _context;
+    public TicketRepository(Swp391ticketResellPlatformContext context) : base(context)
+    {
+        _context = context;
+    }
 
     public async Task<List<Ticket>> GetAllTicketsAsync()
     {
