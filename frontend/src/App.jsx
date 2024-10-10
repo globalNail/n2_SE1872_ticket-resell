@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -9,12 +10,13 @@ import TicketList from "./components/ticket/TicketList";
 import TicketDetails from "./pages/TicketDetails";
 import LoginModal from "./components/LoginModal";
 import Modal from "./components/common/Modal";
-import Signup from "./pages/SignUp";
+import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import UpTicket from "./pages/UpTicket";  // Sửa lại import
+import UpTicket from "./pages/UpTicket";
+import Login from "./pages/login/Login";  // Import Login page
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -36,10 +38,20 @@ function App() {
                             <Route path="/tickets" element={<TicketList />} />
                             <Route path="/tickets/:id" element={<TicketDetails />} />
                             <Route path="/signup" element={<Signup />} />
+                            <Route path="/login" element={<Login />} />  {/* Define Login route */}
                             <Route path="/profile" element={<Profile />} />
-                            <Route path="/UpTicket" element={<UpTicket />} /> {/* Thêm route cho UpTicket */}
-                            <Route path="/staff-approval" Component={StaffApproval}/>
-                            {/* Protected Admin Route */}
+
+                            {/* Use ProtectedRoute for UpTicket */}
+                            <Route
+                                path="/up-ticket"
+                                element={
+                                    <ProtectedRoute>
+                                        <UpTicket />
+                                    </ProtectedRoute>
+                                }
+                            />
+
+                            <Route path="/staff-approval" Component={StaffApproval} />
                             <Route
                                 path="/admin"
                                 element={
@@ -68,4 +80,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,20 +1,17 @@
-import React, { createContext, useState, useEffect } from "react";
+// src/contexts/AuthContext.jsx
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { auth } from "../services/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
+// Create the AuthContext
 export const AuthContext = createContext({
     currentUser: null,
 });
 
+// AuthProvider component to provide authentication state
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    // const googleSignIn = () => {
-    //     const provider = new GoogleAuthProvider();
-    //     signInWithPopup(auth, provider);
-    // };
-    // const logOut = () => {
-    //     signOut(auth);
-    // };
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
@@ -29,6 +26,8 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-export const UserAuth = () => {
+
+// Custom hook to use AuthContext
+export const useAuth = () => {
     return useContext(AuthContext);
 };
