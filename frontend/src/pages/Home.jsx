@@ -152,7 +152,7 @@ function Home() {
                 <h2 className="text-2xl font-semibold mb-4">Featured Tickets</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">Concert A</h3>
+                        <h3 className="text-xl font-bold">Concert Anh Trai "Say Hi"</h3>
                         <img src={concertImage} alt="Concert A" className="w-full h-48 object-cover" />
                         <p>Price: $50</p>
                         <p>Date: 2024-05-20</p>
@@ -163,7 +163,7 @@ function Home() {
                         </Link>
                     </div>
                     <div className="border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">Sports Event B</h3>
+                        <h3 className="text-xl font-bold">Tàu Bắc Nam</h3>
                         <img src={sportImage} alt="Sports Event B" className="w-full h-48 object-cover" />
                         <p>Price: $75</p>
                         <p>Date: 2024-06-15</p>
@@ -174,7 +174,7 @@ function Home() {
                         </Link>
                     </div>
                     <div className="border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">Theater C</h3>
+                        <h3 className="text-xl font-bold">VBA</h3>
                         <img src={theaterImage} alt="Theater C" className="w-full h-48 object-cover" />
                         <p>Price: $60</p>
                         <p>Date: 2024-07-10</p>
