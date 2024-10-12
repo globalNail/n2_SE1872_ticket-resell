@@ -56,6 +56,8 @@ function Home() {
     const categoriesToDisplay = ticketCategories.slice(currentIndex, currentIndex + 3);
 
     return (
+        
+         
         <div className="relative">
             {/* Main Container */}
             <div className="relative w-full h-screen">
@@ -140,7 +142,7 @@ function Home() {
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                         onClick={handleNextClick}
                     >
-                        Next →
+                         →
                     </button>
                 </div>
             </section>
