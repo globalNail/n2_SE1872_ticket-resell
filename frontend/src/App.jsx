@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
+
 import Home from "./pages/Home";
 import StaffApproval from "./pages/verify/StaffApproval";
 import TicketList from "./components/ticket/TicketList";
@@ -65,9 +65,6 @@ function App() {
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
-
-                    {/* Footer Component */}
-                    <Footer />
 
                     {/* Login Modal */}
                     <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
