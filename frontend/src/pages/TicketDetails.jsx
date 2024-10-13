@@ -27,6 +27,11 @@ export default function TicketDetails() {
         fetchTicket();
     }, [id]);
 
+    const handleAddToCart = () => {
+        // You can add cart logic here, e.g., update cart state or call a cart service
+        alert(`Ticket "${ticket.barcode}" has been added to your cart!`);
+    };
+
     if (loading) {
         return (
             <div className="container mx-auto p-6">
@@ -46,19 +51,28 @@ export default function TicketDetails() {
     }
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto p-6 border rounded shadow-lg bg-white">
             <h1 className="text-3xl font-bold mb-4">{ticket.barcode}</h1>
-            <p className="text-gray-700 mb-2">
+            <p className="text-lg text-gray-700 mb-2">
                 Price: ${ticket.price.toFixed(2)}
             </p>
-            <p className="text-gray-700 mb-2">
+            <p className="text-lg text-gray-700 mb-2">
                 Quantity Available: {ticket.quantity}
             </p>
-            <p className="text-gray-700 mb-2">Status: {ticket.status}</p>
-            {/* Add more detailed information as needed */}
+            <p className="text-lg text-gray-700 mb-2">Status: {ticket.status}</p>
+            <p className="text-lg text-gray-700 mb-4">
+                Seller ID: {ticket.sellerId}
+            </p>
+            <p className="text-lg text-gray-700 mb-4">
+                Category: {ticket.categoryId}
+            </p>
+            {/* Add more fields as necessary */}
 
-            <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-                Purchase Ticket
+            <button
+                className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                onClick={handleAddToCart}
+            >
+                Add to Cart
             </button>
         </div>
     );

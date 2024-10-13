@@ -77,7 +77,9 @@ function Home() {
 
                 {/* Search Bar */}
                 <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-                    <h1 className="text-4xl font-bold mb-4 text-white">Welcome to TicketResell</h1>
+                <h1 style={{ animation: "blink 1s infinite" }} className="text-4xl font-bold mb-4 text-white">
+  Welcome to TicketResell
+</h1>
                     <p className="text-lg text-white">Buy and sell tickets for your favorite events with ease.</p>
                 </div>
 
@@ -126,9 +128,9 @@ function Home() {
                 <h2 className="text-2xl font-semibold mb-4">Ticket Categories</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {categoriesToDisplay.map((category, index) => (
-                        <div key={index} className="border rounded shadow p-4 h-60">
+                        <div key={index} className="group border rounded shadow p-4 h-60 overflow-hidden">
                             <h3 className="text-xl font-bold">{category.name}</h3>
-                            <img src={category.image} alt={category.name} className="w-full h-48 object-cover" />
+                            <img src={category.image} alt={category.name} className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110" />
                             <Link to={category.link}>
                                 <button className="mt-2 text-white px-4 py-2 rounded hover:bg-green-600">
                                     {category.name}
@@ -147,13 +149,19 @@ function Home() {
                 </div>
             </section>
 
-            {/* Featured Tickets Section */}
-            <section>
+           {/* Featured Tickets Section */}
+           <section>
                 <h2 className="text-2xl font-semibold mb-4">Featured Tickets</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="border rounded shadow p-4 h-65">
+                    <div className="group border rounded shadow p-4 h-65">
                         <h3 className="text-xl font-bold">Concert Anh Trai "Say Hi"</h3>
-                        <img src={concertImage} alt="Concert A" className="w-full h-48 object-cover" />
+                        <div className="overflow-hidden">
+                            <img
+                                src={concertImage}
+                                alt="Concert A"
+                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                            />
+                        </div>
                         <p>Price: $50</p>
                         <p>Date: 2024-05-20</p>
                         <Link to="/tickets/1">
@@ -162,9 +170,15 @@ function Home() {
                             </button>
                         </Link>
                     </div>
-                    <div className="border rounded shadow p-4 h-65">
+                    <div className="group border rounded shadow p-4 h-65">
                         <h3 className="text-xl font-bold">Tàu Bắc Nam</h3>
-                        <img src={sportImage} alt="Sports Event B" className="w-full h-48 object-cover" />
+                        <div className="overflow-hidden">
+                            <img
+                                src={sportImage}
+                                alt="Sports Event B"
+                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                            />
+                        </div>
                         <p>Price: $75</p>
                         <p>Date: 2024-06-15</p>
                         <Link to="/tickets/2">
@@ -173,9 +187,15 @@ function Home() {
                             </button>
                         </Link>
                     </div>
-                    <div className="border rounded shadow p-4 h-65">
+                    <div className="group border rounded shadow p-4 h-65">
                         <h3 className="text-xl font-bold">VBA</h3>
-                        <img src={theaterImage} alt="Theater C" className="w-full h-48 object-cover" />
+                        <div className="overflow-hidden">
+                            <img
+                                src={theaterImage}
+                                alt="Theater C"
+                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                            />
+                        </div>
                         <p>Price: $60</p>
                         <p>Date: 2024-07-10</p>
                         <Link to="/tickets/3">
