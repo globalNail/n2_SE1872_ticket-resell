@@ -1,5 +1,8 @@
-
+﻿
 using API.Injection;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Repository.Interfaces;
 using Repository.Models;
 using Repository.Repositories;
@@ -12,6 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ITicketService, TicketServices>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
+//// Lấy đường dẫn tương đối đến file JSON từ thư mục gốc của project
+//var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "TicketResell.json");
+
+//// Khởi tạo Firebase Admin SDK
+//FirebaseApp.Create(new AppOptions()
+//{
+//    Credential = GoogleCredential.FromFile(pathToKey)
+//});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.DTOs;
 using Repository.Models;
+using Repository.Repositories;
 using Service.Interface;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,7 +14,6 @@ namespace API.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _services;
-
         public TicketController(ITicketService ticketService)
         {
             _services = ticketService;
