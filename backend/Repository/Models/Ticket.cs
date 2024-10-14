@@ -15,6 +15,8 @@ public partial class Ticket
 
     public string? SeatNumber { get; set; }
 
+    public DateTime? StartDate { get; set; }
+
     public int? SellerId { get; set; }
 
     public int? CategoryId { get; set; }
