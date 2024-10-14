@@ -1,4 +1,5 @@
-﻿using Repository.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,8 @@ namespace Repository.DTOs
 
         public int? CategoryId { get; set; }
 
-        public string? PdfFile { get; set; }
-         
+        public IFormFile? File { get; set; }
+
         public string? ProcessingNotes { get; set; }
-    
     }
 }
