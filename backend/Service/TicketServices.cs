@@ -1,5 +1,5 @@
 ﻿using Google.Cloud.Storage.V1;
-using Repository.DTOs;
+using Repository.DTOs.Ticket;
 using Repository.Interfaces;
 using Repository.Models;
 using Service.Interface;
@@ -14,13 +14,16 @@ namespace Service
     public class TicketServices : ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly ICategoryyRepository _categoryRepository;
         private readonly string _projectId = "ticketresellauth";
         private readonly string _bucketName = "ticketresellauth.appspot.com";
-        public TicketServices(ITicketRepository ticketRepository)
+        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository)
         {
             _ticketRepository = ticketRepository;
+            _categoryRepository = categoryyRepository;
         }
 
+        #region Add Ticket
         public async Task<string> AddTicket(TicketDtos ticketDtos)
         {
             if (ticketDtos == null)
@@ -81,6 +84,7 @@ namespace Service
             }
         }
 
+        #endregion
         public async Task<int> CountTicket()
         {
            return await _ticketRepository.CountTicket();
@@ -102,25 +106,74 @@ namespace Service
             }
         }
 
-        public async Task<List<Ticket>> GetAllTicket()
+        #region GetAll Ticket
+        public async Task<List<TicketResponse>> GetAllTicket()
         {
-            return await _ticketRepository.GetAllTickets();
-        }
-
-        public async Task<Ticket> GetTicketById(int ticketId)
-        {
-            try
+            List<TicketResponse> ticketResponse = new List<TicketResponse>();
+            var listTicket = await _ticketRepository.GetAllTickets();
             {
-                if (ticketId == null)
+                foreach (var item in listTicket)
                 {
-                    throw new Exception("Please enter ticketId");
+                    var ticket = await _ticketRepository.GetTicketsById(item.TicketId);
+                    var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
+                    if (item.Quantity > 0)
+                    {
+                        var newTicket = new TicketResponse()
+                        {
+                            TicketId = item.TicketId,
+                            Barcode = item.Barcode,
+                            Quantity = item.Quantity,
+                            SeatNumber = item.SeatNumber,
+                            StartDate = item.StartDate,
+                            SellerId = item.SellerId,
+                            CategoryName = category.CategoryName,
+                            PdfFile = item.PdfFile,
+                            Status = item.Status,
+                            PostedAt = item.PostedAt,
+                            ApprovedBy = item.ApprovedBy,
+                            ApprovalDate = item.ApprovalDate,
+                            ProcessingNotes = item.ProcessingNotes,
+                            ModifiedDate = item.ModifiedDate,
+
+                        };
+                        ticketResponse.Add(newTicket);
+                    }
                 }
-                return await GetTicketById(ticketId);
+                return ticketResponse;
             }
-            catch (Exception ex)
+        }
+        #endregion
+
+        public async Task<TicketResponse> GetTicketById(int ticketId)
+        {
+            var ticket = await _ticketRepository.GetTicketsById(ticketId);
+            var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
+            if(ticket == null)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Ticket not found");
             }
+            if (category == null)
+            {
+                throw new Exception("category not found");
+            }
+            var ticketResponse = new TicketResponse()
+            {
+                TicketId = ticket.TicketId,
+                Barcode = ticket.Barcode,
+                Quantity = ticket.Quantity,
+                SeatNumber = ticket.SeatNumber,
+                StartDate = ticket.StartDate,
+                SellerId = ticket.SellerId,
+                CategoryName = category.CategoryName,
+                PdfFile = ticket.PdfFile,
+                Status = ticket.Status,
+                PostedAt = ticket.PostedAt,
+                ApprovedBy = ticket.ApprovedBy,
+                ApprovalDate = ticket.ApprovalDate,
+                ProcessingNotes = ticket.ProcessingNotes,
+                ModifiedDate = ticket.ModifiedDate,
+            };
+            return ticketResponse;
         }
 
         public async Task<string> UpdateTicket(int ticketId, TicketUpdatedtos ticketUpdatedtos)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Repository.DTOs;
+using Repository.DTOs.Ticket;
 using Repository.Models;
 using Repository.Repositories;
 using Service.Interface;
