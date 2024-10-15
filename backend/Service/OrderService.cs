@@ -51,5 +51,9 @@ namespace Service
                 throw ex;
             }
         }
+        public async Task<string?> GetLatestOrderStatusByMember(int buyerId)
+        {
+            return await _orderRepository.GetLatestOrderStatusByMemberAsync(buyerId);
+        }
     }
 }

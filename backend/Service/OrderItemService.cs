@@ -45,6 +45,31 @@ namespace Service
                 throw ex;
             }
         }
+        public async Task<OrderItemResponseDTO> AddItemtoOrder(AddItemtoOrderDTO dto)
+        {
+            try
+            {
+                if(dto == null)
+                {
+                    throw new Exception("DTO is empty");
+                }
+                var ticket = await _ticketRepository.GetTicketsById((int)dto.TicketId);
+                OrderItem item = new OrderItem();
+                item.OrderId = dto.OrderId;
+                item.TicketId = dto.TicketId;
+                item.Quantity = dto.Quantity;
+                item.UnitPrice = ticket.Price;
+                item.TotalPrice = item.UnitPrice * item.Quantity;
+                item.AddedAt = DateTime.UtcNow;
+                var result = _mapper.Map<OrderItemResponseDTO>(item);
+                _itemRepository.Insert(item);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public async Task <OrderItemResponseDTO> UpdateItem(UpdateItemDTO dto, int id)
         {
             try

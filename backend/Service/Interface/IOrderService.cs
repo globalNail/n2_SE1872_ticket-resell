@@ -10,5 +10,6 @@ namespace Service.Interface
     public interface IOrderService
     {
         Task<OrderResponseDTO> CreateOrder(CreateOrderDTO dto);
+        Task<string?> GetLatestOrderStatusByMember(int buyerId);
     }
 }

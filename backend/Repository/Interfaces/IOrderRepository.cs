@@ -10,5 +10,6 @@ namespace Repository.Interfaces
     public interface IOrderRepository: IGenericRepository<Order>
     {
         int GetMaxId();
+        Task<string?> GetLatestOrderStatusByMemberAsync(int buyerId);
     }
 }
