@@ -70,6 +70,7 @@ namespace Service
                     PdfFile = downloadUrl,
                     Status = "Verify",
                     PostedAt = DateTime.Now,
+                    StartDate = DateTime.Now,
                     ApprovedBy = null,
                     ApprovalDate = null,
                     ProcessingNotes = ticketDtos.ProcessingNotes,
