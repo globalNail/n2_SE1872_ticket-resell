@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Repository.DTOs.Order;
+using Repository.DTOs.OrderItem;
 using Repository.DTOs.Wallet;
 using Repository.Models;
 using System;
@@ -14,6 +16,12 @@ namespace Service.Mapper
         public MapperConfigProfile() 
         {
             CreateMap<WalletDTOResponse, Wallet>().ReverseMap();
+            CreateMap<Order, OrderResponseDTO>()
+            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems)) // Map OrderItems
+            .ReverseMap();
+
+            // Ánh xạ giữa OrderItem và OrderItemResponseDTO
+            CreateMap<OrderItem, OrderItemResponseDTO>().ReverseMap();
         }
        
     }

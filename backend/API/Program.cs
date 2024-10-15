@@ -12,8 +12,7 @@ using Service.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ITicketService, TicketServices>();
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
 
 //// Lấy đường dẫn tương đối đến file JSON từ thư mục gốc của project
 //var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "TicketResell.json");

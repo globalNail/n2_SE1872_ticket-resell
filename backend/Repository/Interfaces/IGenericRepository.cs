@@ -25,6 +25,6 @@ namespace Repository.Interfaces
         void Delete(T entityToDelete);
         bool Update(object id, T entityToUpdate);
         void Update(T entityToUpdate);
-
+        void Save();
     }
 }
