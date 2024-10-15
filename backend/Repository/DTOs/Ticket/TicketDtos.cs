@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.DTOs
+namespace Repository.DTOs.Ticket
 {
     public class TicketDtos
     {

@@ -1,4 +1,4 @@
-﻿using Repository.DTOs;
+﻿using Repository.DTOs.Ticket;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace Service.Interface
 {
     public interface ITicketService
     {
-        Task<List<Ticket>> GetAllTicket();
-        Task<Ticket> GetTicketById(int ticketId);
+        Task<List<TicketResponse>> GetAllTicket();
+        Task<TicketResponse> GetTicketById(int ticketId);
         Task<int> CountTicket();
         Task<string> AddTicket(TicketDtos ticketDtos);
         Task DeleteTicket(int ticketId);
