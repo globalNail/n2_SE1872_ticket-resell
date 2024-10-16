@@ -26,7 +26,6 @@ namespace API.Controllers
             {
                 var wallet = await _walletService.GetBalanceByUserId(userId);
 
-
                 var walletDTO = _mapper.Map<WalletDTOResponse>(wallet);
 
                 return Ok(ApiResult<WalletDTOResponse>.Succeed(walletDTO, "Get wallet successfully"));

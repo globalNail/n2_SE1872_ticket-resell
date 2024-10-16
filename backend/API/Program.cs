@@ -1,21 +1,7 @@
-﻿
-using API.Injection;
-using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Builder.Extensions;
-using Repository.Interfaces;
+﻿using API.Injection;
 using Repository.Models;
-using Repository.Repositories;
-using Service;
-using Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-
-builder.Services.AddScoped<ICategoryServices, CategoryServices>();
-builder.Services.AddScoped<ICategoryyRepository, CategoryRepository>();
 
 //// Lấy đường dẫn tương đối đến file JSON từ thư mục gốc của project
 //var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "TicketResell.json");

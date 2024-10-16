@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Repository.Models;
 
@@ -44,32 +43,15 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
     public virtual DbSet<Wallet> Wallets { get; set; }
 
-    public static string GetConnectionString(string connectionStringName)
-    {
-        var config = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-        string connectionString = config.GetConnectionString(connectionStringName);
-        if (string.IsNullOrEmpty(connectionString))
-        {
-            throw new InvalidOperationException($"Connection string '{connectionStringName}' not found.");
-        }
-        return connectionString;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Business>(entity =>
         {
-            entity.HasKey(e => e.BusinessId).HasName("PK__Business__F1EAA34E417A06DE");
+            entity.HasKey(e => e.BusinessId).HasName("PK__Business__F1EAA34E1A8D3FFA");
 
             entity.ToTable("Business");
 
-            entity.HasIndex(e => e.UserId, "UQ__Business__1788CCADF042C273").IsUnique();
+            entity.HasIndex(e => e.UserId, "UQ__Business__1788CCADDD8A4C21").IsUnique();
 
             entity.Property(e => e.BusinessId).HasColumnName("BusinessID");
             entity.Property(e => e.BusinessName).HasMaxLength(100);
@@ -88,16 +70,16 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
             entity.HasOne(d => d.Package).WithMany(p => p.Businesses)
                 .HasForeignKey(d => d.PackageId)
-                .HasConstraintName("FK__Business__Packag__4BAC3F29");
+                .HasConstraintName("FK__Business__Packag__4CA06362");
 
             entity.HasOne(d => d.User).WithOne(p => p.Business)
                 .HasForeignKey<Business>(d => d.UserId)
-                .HasConstraintName("FK__Business__UserID__4AB81AF0");
+                .HasConstraintName("FK__Business__UserID__4BAC3F29");
         });
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Category__19093A2BF882DAD7");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Category__19093A2B67F8F8B4");
 
             entity.ToTable("Category");
 
@@ -108,7 +90,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__6A4BEDF602689040");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__6A4BEDF639F53EA2");
 
             entity.ToTable("Feedback");
 
@@ -136,11 +118,11 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Member>(entity =>
         {
-            entity.HasKey(e => e.MemberId).HasName("PK__Member__0CF04B380EAF8053");
+            entity.HasKey(e => e.MemberId).HasName("PK__Member__0CF04B38456B5B26");
 
             entity.ToTable("Member");
 
-            entity.HasIndex(e => e.UserId, "UQ__Member__1788CCADE01CD672").IsUnique();
+            entity.HasIndex(e => e.UserId, "UQ__Member__1788CCAD8564FA91").IsUnique();
 
             entity.Property(e => e.MemberId).HasColumnName("MemberID");
             entity.Property(e => e.AverageRating)
@@ -163,7 +145,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAF5A1EE8B6");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAF7CEAB26F");
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.BuyerId).HasColumnName("BuyerID");
@@ -173,7 +155,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
             entity.Property(e => e.ModifiedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
-                .HasDefaultValue("open");
+                .HasDefaultValue("Open");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.Buyer).WithMany(p => p.Orders)
@@ -183,7 +165,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.OrderItemId).HasName("PK__OrderIte__57ED06A126061BE5");
+            entity.HasKey(e => e.OrderItemId).HasName("PK__OrderIte__57ED06A189746CCB");
 
             entity.ToTable("OrderItem");
 
@@ -212,7 +194,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<ServicePackage>(entity =>
         {
-            entity.HasKey(e => e.PackageId).HasName("PK__ServiceP__322035EC859BF24C");
+            entity.HasKey(e => e.PackageId).HasName("PK__ServiceP__322035EC4DC35C8A");
 
             entity.ToTable("ServicePackage");
 
@@ -227,9 +209,9 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Staff>(entity =>
         {
-            entity.HasKey(e => e.StaffId).HasName("PK__Staff__96D4AAF721146298");
+            entity.HasKey(e => e.StaffId).HasName("PK__Staff__96D4AAF7D0199C58");
 
-            entity.HasIndex(e => e.UserId, "UQ__Staff__1788CCAD0BBE975D").IsUnique();
+            entity.HasIndex(e => e.UserId, "UQ__Staff__1788CCAD9B1831B5").IsUnique();
 
             entity.Property(e => e.StaffId).HasColumnName("StaffID");
             entity.Property(e => e.ModifiedDate).HasDefaultValueSql("(getdate())");
@@ -243,15 +225,12 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Ticket>(entity =>
         {
-            entity.HasKey(e => e.TicketId).HasName("PK__Ticket__712CC627C54D0BA3");
+            entity.HasKey(e => e.TicketId).HasName("PK__Ticket__712CC627C4955E89");
 
             entity.ToTable("Ticket");
 
-            entity.HasIndex(e => e.Barcode, "UQ__Ticket__177800D3EC8E6E74").IsUnique();
-
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.ApprovalDate).HasColumnType("datetime");
-            entity.Property(e => e.Barcode).HasMaxLength(150);
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.ModifiedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.PostedAt)
@@ -264,7 +243,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
             entity.Property(e => e.StartDate).HasColumnType("datetime");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
-                .HasDefaultValue("pending");
+                .HasDefaultValue("Pending");
 
             entity.HasOne(d => d.ApprovedByNavigation).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.ApprovedBy)
@@ -281,11 +260,11 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Transaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BC9F185FF");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BA371C6DD");
 
             entity.ToTable("Transaction");
 
-            entity.HasIndex(e => e.OrderId, "UQ__Transact__C3905BAE7B987573").IsUnique();
+            entity.HasIndex(e => e.OrderId, "UQ__Transact__C3905BAE7C64F08A").IsUnique();
 
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
@@ -303,7 +282,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
                 .HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
-                .HasDefaultValue("processing");
+                .HasDefaultValue("Processing");
             entity.Property(e => e.TransactionDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -315,7 +294,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<TransactionProcess>(entity =>
         {
-            entity.HasKey(e => e.TransactionProcessId).HasName("PK__Transact__8CFAA0F7A141E97C");
+            entity.HasKey(e => e.TransactionProcessId).HasName("PK__Transact__8CFAA0F73F958CF9");
 
             entity.ToTable("TransactionProcess");
 
@@ -323,7 +302,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
             entity.Property(e => e.ModifiedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
-                .HasDefaultValue("initiated");
+                .HasDefaultValue("Initiated");
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.UpdatedAt)
@@ -341,7 +320,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__1788CCAC315F64A7");
+            entity.HasKey(e => e.UserId).HasName("PK__User__1788CCAC5F427927");
 
             entity.ToTable("User");
 
@@ -362,7 +341,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<UserRole>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__UserRole__8AFACE3A546CEBAF");
+            entity.HasKey(e => e.RoleId).HasName("PK__UserRole__8AFACE3AD1E37E56");
 
             entity.ToTable("UserRole");
 
@@ -372,11 +351,11 @@ public partial class Swp391ticketResellPlatformContext : DbContext
 
         modelBuilder.Entity<Wallet>(entity =>
         {
-            entity.HasKey(e => e.WalletId).HasName("PK__Wallet__84D4F92E70DFBB84");
+            entity.HasKey(e => e.WalletId).HasName("PK__Wallet__84D4F92EE93E681B");
 
             entity.ToTable("Wallet");
 
-            entity.HasIndex(e => e.UserId, "UQ__Wallet__1788CCAD6C58AFD4").IsUnique();
+            entity.HasIndex(e => e.UserId, "UQ__Wallet__1788CCADF74F2A5D").IsUnique();
 
             entity.Property(e => e.WalletId).HasColumnName("WalletID");
             entity.Property(e => e.Balance)

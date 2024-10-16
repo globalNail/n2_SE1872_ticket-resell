@@ -31,7 +31,7 @@ public partial class Ticket
 
     public DateTime? ApprovalDate { get; set; }
 
-    public string? ProcessingNotes { get; set; }
+    public string? Description { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 

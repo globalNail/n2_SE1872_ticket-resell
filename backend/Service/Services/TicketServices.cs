@@ -76,7 +76,7 @@ namespace Service
                     StartDate = DateTime.Now,
                     ApprovedBy = null,
                     ApprovalDate = null,
-                    ProcessingNotes = ticketDtos.ProcessingNotes,
+                    Description = ticketDtos.ProcessingNotes,
                     ModifiedDate = null
                 };
                 var result = await _ticketRepository.AddTicket(ticket);
@@ -132,7 +132,7 @@ namespace Service
                             PostedAt = item.PostedAt,
                             ApprovedBy = item.ApprovedBy,
                             ApprovalDate = item.ApprovalDate,
-                            ProcessingNotes = item.ProcessingNotes,
+                            ProcessingNotes = item.Description,
                             ModifiedDate = item.ModifiedDate,
 
                         };
@@ -170,7 +170,7 @@ namespace Service
                 PostedAt = ticket.PostedAt,
                 ApprovedBy = ticket.ApprovedBy,
                 ApprovalDate = ticket.ApprovalDate,
-                ProcessingNotes = ticket.ProcessingNotes,
+                ProcessingNotes = ticket.Description,
                 ModifiedDate = ticket.ModifiedDate,
             };
             return ticketResponse;
@@ -194,7 +194,7 @@ namespace Service
             existingTicket.Quantity = ticketUpdatedtos.Quantity;
             existingTicket.Price = ticketUpdatedtos.Price;
             existingTicket.SeatNumber = ticketUpdatedtos.SeatNumber;
-            existingTicket.ProcessingNotes = ticketUpdatedtos.ProcessingNotes;
+            existingTicket.Description = ticketUpdatedtos.Description;
             existingTicket.ModifiedDate = DateTime.Now;
             var result = await _ticketRepository.UpdateTicket(existingTicket);
             return result ? "Update Successfull" : "Update failed";
