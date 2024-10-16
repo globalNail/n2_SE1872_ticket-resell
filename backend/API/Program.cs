@@ -12,8 +12,7 @@ using Service.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ITicketService, TicketServices>();
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
 
 builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 builder.Services.AddScoped<ICategoryyRepository, CategoryRepository>();

@@ -98,6 +98,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _dbSet.Attach(entityToUpdate);
         _context.Entry(entityToUpdate).State = EntityState.Modified;
     }
+    public void Save()
+    {
+        _context.SaveChanges();
+    }
 
 
 }

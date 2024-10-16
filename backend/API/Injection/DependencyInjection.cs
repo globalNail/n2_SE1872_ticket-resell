@@ -4,6 +4,8 @@ using Repository.Base;
 using Repository.Interfaces;
 using Repository.Models;
 using Repository.Repositories;
+using Service.Interface;
+using Service;
 using Service.Mapper;
 using Service.ServiceWallet;
 
@@ -20,13 +22,20 @@ namespace API.Injection
             });
 
             //REPOSITORY
+            
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 
             //GENERIC REPOSITORY
             services.AddScoped<IGenericRepository<Wallet>,GenericRepository<Wallet>>();
 
             //SERVICE
             services.AddScoped<IWalletService, WalletService>();
+            services.AddScoped<ITicketService, TicketServices>();
+            services.AddScoped<IOrderIItemService, OrderItemService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             //UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
