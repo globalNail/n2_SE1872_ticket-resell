@@ -1,5 +1,7 @@
 USE [master]
+
 GO
+
 IF EXISTS (SELECT * FROM sys.databases WHERE name='SWP391TicketResellPlatform')
     DROP DATABASE SWP391TicketResellPlatform
 GO
@@ -79,7 +81,7 @@ CREATE TABLE Business(
     BusinessName NVARCHAR(100) NOT NULL,
     RegistrationDate DATETIME DEFAULT GETDATE(),
     ExpiryDate DATETIME,
-    Status NVARCHAR(50) DEFAULT 'Pending',
+    Status NVARCHAR(50) DEFAULT 'Pending', CHECK (Status IN ('Pending', 'Valid', 'Expired', 'Sold')),
     CanSkipVerification BIT DEFAULT 0,
     IsAgent BIT DEFAULT 0,
     ModifiedDate DATETIME2 DEFAULT GETDATE(),
@@ -88,7 +90,7 @@ CREATE TABLE Business(
 );
 CREATE TABLE Ticket (
     TicketID INT IDENTITY(1,1) PRIMARY KEY,
-    Barcode NVARCHAR(150) NOT NULL UNIQUE,
+    Barcode NVARCHAR(MAX) NOT NULL ,
     Price DECIMAL(10, 2) NOT NULL,
     Quantity INT DEFAULT 1,
     SeatNumber NVARCHAR(10),
@@ -96,11 +98,11 @@ CREATE TABLE Ticket (
     SellerID INT,
     CategoryID INT,
     PdfFile NVARCHAR(MAX),
-    Status NVARCHAR(50) DEFAULT 'pending' CHECK (Status IN ('pending', 'verified', 'rejected', 'sold')),
+    Status NVARCHAR(50) DEFAULT 'Pending' CHECK (Status IN ('Pending', 'Verified', 'Rejected', 'Sold')),
     PostedAt DATETIME DEFAULT GETDATE(),
     ApprovedBy INT NULL,
     ApprovalDate DATETIME NULL,
-    ProcessingNotes NVARCHAR(MAX),
+    Description NVARCHAR(MAX),
     ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (SellerID) REFERENCES Member(MemberID),
     FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
@@ -111,7 +113,7 @@ CREATE TABLE Orders (
     OrderID INT IDENTITY(1,1) PRIMARY KEY,
     BuyerID INT,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    Status NVARCHAR(50) DEFAULT 'open' CHECK (Status IN ('open', 'completed', 'cancelled')),
+    Status NVARCHAR(50) DEFAULT 'Open' CHECK (Status IN ('open', 'Completed', 'Cancelled')),
     TotalAmount DECIMAL(10,2),
     ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (BuyerID) REFERENCES Member(MemberID)
@@ -139,7 +141,7 @@ CREATE TABLE [Transaction] (
     PlatformFee DECIMAL(10,2) DEFAULT 0.00,
     Discount DECIMAL(10,2) DEFAULT 0.00,
     NetAmount DECIMAL(10,2) DEFAULT 0.00,
-    Status NVARCHAR(50) DEFAULT 'processing' CHECK (Status IN ('processing', 'completed', 'refunded')),
+    Status NVARCHAR(50) DEFAULT 'Processing' CHECK (Status IN ('Processing', 'Completed', 'Refunded')),
     ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
@@ -148,7 +150,7 @@ CREATE TABLE TransactionProcess (
     TransactionProcessID INT IDENTITY(1,1) PRIMARY KEY,
     TransactionID INT,
     TicketID INT,
-    Status NVARCHAR(50) DEFAULT 'initiated' CHECK (Status IN ('initiated', 'in_process', 'completed', 'cancelled')),
+    Status NVARCHAR(50) DEFAULT 'Initiated' CHECK (Status IN ('Initiated', 'In_process', 'Completed', 'Cancelled')),
     UpdatedAt DATETIME DEFAULT GETDATE(),
     Notes NVARCHAR(MAX),
     ModifiedDate DATETIME2 DEFAULT GETDATE(),
@@ -228,3 +230,4 @@ INSERT INTO Feedback (BuyerID, TicketID, SellerID, Rating, Comment) VALUES
  (SELECT TicketID FROM Ticket WHERE Barcode = '0987654321'),
  (SELECT MemberID FROM Member WHERE UserID = (SELECT UserID FROM [User] WHERE Username = 'john_seller')),
  4, 'Good service, will buy again.');
+
