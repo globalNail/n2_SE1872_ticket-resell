@@ -8,6 +8,7 @@ using Service.Interface;
 using Service;
 using Service.Mapper;
 using Service.ServiceWallet;
+using Service.Services;
 
 namespace API.Injection
 {
@@ -28,6 +29,7 @@ namespace API.Injection
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<ICategoryyRepository, CategoryRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
 
             //GENERIC REPOSITORY
             services.AddScoped<IGenericRepository<Wallet>,GenericRepository<Wallet>>();
@@ -38,6 +40,7 @@ namespace API.Injection
             services.AddScoped<IOrderIItemService, OrderItemService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IMemberServices, MemberServices>();
 
             //UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
