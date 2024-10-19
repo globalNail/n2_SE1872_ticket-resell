@@ -1,43 +1,36 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import headerLogo from '../images/concert.jpg'; // Background image
-import concertImage from '../images/anhtrai.jpg'; // Concert A image
-import sportImage from '../images/train.jpg'; // Sport Event B image
-import theaterImage from '../images/vba.jpg'; // Theater C image
+import headerLogo from "../assets/images/concert.jpg"; // Background image
+import concertImage from "../assets/images/anhtrai.jpg"; // Concert A image
+import sportImage from "../assets/images/train.jpg"; // Sport Event B image
+import theaterImage from "../assets/images/vba.jpg"; // Theater C image
 
 // Import new category images
-import footballImage from '../images/football.jpg';
-import tennisImage from '../images/tennis.jpg';
-import basketballImage from '../images/basketball.jpg';
-import golfImage from '../images/golf.jpg';
-import eventImage from '../images/event.jpg';
-import comedyImage from '../images/comedy.jpg';
-import travelImage from '../images/travel.jpg';
-import showImage from '../images/show.jpg';
+import footballImage from "../assets/images/football.jpg";
+import tennisImage from "../assets/images/tennis.jpg";
+import basketballImage from "../assets/images/basketball.jpg";
+import golfImage from "../assets/images/golf.jpg";
+import eventImage from "../assets/images/event.jpg";
+import comedyImage from "../assets/images/comedy.jpg";
+import travelImage from "../assets/images/travel.jpg";
+import showImage from "../assets/images/show.jpg";
 
 function Home() {
-    const navigate = useNavigate();
-    const { currentUser } = useAuth();
-
-    const handleSellTicket = () => {
-        if (currentUser) {
-            navigate("/up-ticket");
-        } else {
-            navigate("/signup"); // Redirect to signup/login page if not logged in
-        }
-    };
-
     // Ticket categories
     const ticketCategories = [
-        { name: 'Football', link: '/category/football', image: footballImage },
-        { name: 'Tennis', link: '/category/tennis', image: tennisImage },
-        { name: 'Basketball', link: '/category/basketball', image: basketballImage },
-        { name: 'Golf', link: '/category/golf', image: golfImage },
-        { name: 'Event', link: '/category/event', image: eventImage },
-        { name: 'Comedy', link: '/category/comedy', image: comedyImage },
-        { name: 'Travel', link: '/category/travel', image: travelImage },
-        { name: 'Shows', link: '/category/shows', image: showImage },
+        { name: "Football", link: "/category/football", image: footballImage },
+        { name: "Tennis", link: "/category/tennis", image: tennisImage },
+        {
+            name: "Basketball",
+            link: "/category/basketball",
+            image: basketballImage,
+        },
+        { name: "Golf", link: "/category/golf", image: golfImage },
+        { name: "Event", link: "/category/event", image: eventImage },
+        { name: "Comedy", link: "/category/comedy", image: comedyImage },
+        { name: "Travel", link: "/category/travel", image: travelImage },
+        { name: "Shows", link: "/category/shows", image: showImage },
     ];
 
     // State to track the current set of categories being displayed
@@ -53,11 +46,12 @@ function Home() {
     };
 
     // Determine the categories to display based on currentIndex
-    const categoriesToDisplay = ticketCategories.slice(currentIndex, currentIndex + 3);
+    const categoriesToDisplay = ticketCategories.slice(
+        currentIndex,
+        currentIndex + 3
+    );
 
     return (
-        
-         
         <div className="relative">
             {/* Main Container */}
             <div className="relative w-full h-screen">
@@ -67,20 +61,17 @@ function Home() {
                     style={{ backgroundImage: `url(${headerLogo})` }}
                 ></div>
 
-                {/* Sell Tickets Button */}
-                <button
-                    className="absolute top-20 right-10 mt-6 bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 z-10"
-                    onClick={handleSellTicket}
-                >
-                    Sell Tickets
-                </button>
-
                 {/* Search Bar */}
                 <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-                <h1 style={{ animation: "blink 1s infinite" }} className="text-4xl font-bold mb-4 text-white">
-  Welcome to TicketResell
-</h1>
-                    <p className="text-lg text-white">Buy and sell tickets for your favorite events with ease.</p>
+                    <h1
+                        style={{ animation: "blink 1s infinite" }}
+                        className="text-4xl font-bold mb-4 text-white"
+                    >
+                        Welcome to TicketResell
+                    </h1>
+                    <p className="text-lg text-white">
+                        Buy and sell tickets for your favorite events with ease.
+                    </p>
                 </div>
 
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
@@ -97,7 +88,9 @@ function Home() {
 
             {/* Seller Ratings */}
             <section className="mt-12">
-                <h2 className="text-2xl font-semibold mb-4">Top Rated Sellers</h2>
+                <h2 className="text-2xl font-semibold mb-4">
+                    Top Rated Sellers
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="flex items-center">
                         <div className="ml-4">
@@ -115,7 +108,9 @@ function Home() {
                     </div>
                     <div className="flex items-center">
                         <div className="ml-4">
-                            <h3 className="text-lg font-bold">Truong Thao My</h3>
+                            <h3 className="text-lg font-bold">
+                                Truong Thao My
+                            </h3>
                             <p className="text-yellow-500">★★★☆☆</p>
                             <p className="text-gray-500">Average</p>
                         </div>
@@ -125,12 +120,23 @@ function Home() {
 
             {/* Ticket Categories Section */}
             <section className="mt-12">
-                <h2 className="text-2xl font-semibold mb-4">Ticket Categories</h2>
+                <h2 className="text-2xl font-semibold mb-4">
+                    Ticket Categories
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {categoriesToDisplay.map((category, index) => (
-                        <div key={index} className="group border rounded shadow p-4 h-60 overflow-hidden">
-                            <h3 className="text-xl font-bold">{category.name}</h3>
-                            <img src={category.image} alt={category.name} className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110" />
+                        <div
+                            key={index}
+                            className="group border rounded shadow p-4 h-60 overflow-hidden"
+                        >
+                            <h3 className="text-xl font-bold">
+                                {category.name}
+                            </h3>
+                            <img
+                                src={category.image}
+                                alt={category.name}
+                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                            />
                             <Link to={category.link}>
                                 <button className="mt-2 text-white px-4 py-2 rounded hover:bg-green-600">
                                     {category.name}
@@ -144,17 +150,21 @@ function Home() {
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                         onClick={handleNextClick}
                     >
-                         →
+                        →
                     </button>
                 </div>
             </section>
 
-           {/* Featured Tickets Section */}
-           <section>
-                <h2 className="text-2xl font-semibold mb-4">Featured Tickets</h2>
+            {/* Featured Tickets Section */}
+            <section>
+                <h2 className="text-2xl font-semibold mb-4">
+                    Featured Tickets
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="group border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">Concert Anh Trai "Say Hi"</h3>
+                        <h3 className="text-xl font-bold">
+                            Concert Anh Trai "Say Hi"
+                        </h3>
                         <div className="overflow-hidden">
                             <img
                                 src={concertImage}
@@ -206,18 +216,28 @@ function Home() {
                     </div>
                 </div>
             </section>
-             {/* Footer Section */}
-             <footer className="bg-gray-800 text-white py-10 mt-20">
-    <div className="container mx-auto text-center">
-        <p className="mb-2">© 2024 TicketResell. All rights reserved.</p>
-        <div className="flex justify-center space-x-6">
-            <Link to="/about" className="hover:underline">About Us</Link>
-            <Link to="/contact" className="hover:underline">Contact</Link>
-            <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
-            <Link to="/terms" className="hover:underline">Terms of Service</Link>
-        </div>
-    </div>
-</footer>
+            {/* Footer Section */}
+            <footer className="bg-gray-800 text-white py-10 mt-20">
+                <div className="container mx-auto text-center">
+                    <p className="mb-2">
+                        © 2024 TicketResell. All rights reserved.
+                    </p>
+                    <div className="flex justify-center space-x-6">
+                        <Link to="/about" className="hover:underline">
+                            About Us
+                        </Link>
+                        <Link to="/contact" className="hover:underline">
+                            Contact
+                        </Link>
+                        <Link to="/privacy" className="hover:underline">
+                            Privacy Policy
+                        </Link>
+                        <Link to="/terms" className="hover:underline">
+                            Terms of Service
+                        </Link>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

@@ -15,7 +15,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpTicket from "./pages/UpTicket";
-import Login from "./pages/login/Login";  // Import Login page
+import Login from "./pages/login/Login"; // Import Login page
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -35,7 +35,10 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/tickets" element={<TicketList />} />
-                            <Route path="/tickets/:id" element={<TicketDetails />} />
+                            <Route
+                                path="/tickets/:id"
+                                element={<TicketDetails />}
+                            />
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/profile" element={<Profile />} />
@@ -49,7 +52,10 @@ function App() {
                                 }
                             />
 
-                            <Route path="/staff-approval" Component={StaffApproval} />
+                            <Route
+                                path="/staff-approval"
+                                Component={StaffApproval}
+                            />
                             <Route
                                 path="/admin"
                                 element={
