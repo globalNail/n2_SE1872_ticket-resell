@@ -29,23 +29,28 @@ const Header = ({ onLoginClick }) => {
                 >
                     Tickets
                 </Link>
+                <Link to="/UpTicket">
+                    <button className="mt-6 bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+                        Sell Tickets
+                    </button>
+                </Link>
                 {currentUser ? (
                     <>
                         <Link
                             to="/profile"
-                            className="text-gray-700 hover:text-blue-500"
+                            className="mt-6 text-gray-700 hover:text-blue-500"
                         >
                             Profile
                         </Link>
                         <Link
                             to="/admin"
-                            className="text-gray-700 hover:text-blue-500"
+                            className="mt-6 text-gray-700 hover:text-blue-500"
                         >
                             Admin
                         </Link>
                         <button
                             onClick={handleLogout}
-                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                            className="mt-6 px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700"
                         >
                             Logout
                         </button>
@@ -54,13 +59,13 @@ const Header = ({ onLoginClick }) => {
                     <>
                         <button
                             onClick={onLoginClick}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            className="mt-6 px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
                         >
                             Login
                         </button>
                         <Link
                             to="/signup"
-                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            className="mt-6 px-6 py-3 bg-green-300 text-white rounded hover:bg-green-500"
                         >
                             Sign Up
                         </Link>
