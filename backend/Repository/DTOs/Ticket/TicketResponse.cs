@@ -20,8 +20,7 @@ namespace Repository.DTOs.Ticket
         public string? SeatNumber { get; set; }
 
         public DateTime? StartDate { get; set; }
-
-        public int? SellerId { get; set; }
+        public string Username { get; set; } = null!;
 
         public string CategoryName { get; set; }
 
@@ -35,7 +34,7 @@ namespace Repository.DTOs.Ticket
 
         public DateTime? ApprovalDate { get; set; }
 
-        public string? ProcessingNotes { get; set; }
+        public string? Description { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 

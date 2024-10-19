@@ -11,6 +11,6 @@ namespace Repository.DTOs.Ticket
         public int? Quantity { get; set; }
         public decimal Price { get; set; }
         public string? SeatNumber { get; set; }
-        public string? ProcessingNotes { get; set; }
+        public string? Description { get; set; }
     }
 }

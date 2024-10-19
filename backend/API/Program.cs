@@ -16,7 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 builder.Services.AddScoped<ICategoryyRepository, CategoryRepository>();
-
 //// Lấy đường dẫn tương đối đến file JSON từ thư mục gốc của project
 //var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "TicketResell.json");
 

@@ -27,6 +27,7 @@ namespace API.Injection
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
 
             //GENERIC REPOSITORY
             services.AddScoped<IGenericRepository<Wallet>,GenericRepository<Wallet>>();
@@ -36,6 +37,7 @@ namespace API.Injection
             services.AddScoped<ITicketService, TicketServices>();
             services.AddScoped<IOrderIItemService, OrderItemService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IMemberServices, MemberServices>();
 
             //UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
