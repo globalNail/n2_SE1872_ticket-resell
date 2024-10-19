@@ -23,15 +23,15 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Ticket>> AddTicket(TicketDtos ticketDtos)
         {
-            try
-            {
+            //try
+            //{
                 var result = await _services.AddTicket(ticketDtos);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
 
         //Read

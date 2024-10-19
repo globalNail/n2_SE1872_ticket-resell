@@ -15,12 +15,14 @@ namespace Service
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly ICategoryyRepository _categoryRepository;
+        private readonly IMemberRepository _memberRepository;
         private readonly string _projectId = "ticketresellauth";
         private readonly string _bucketName = "ticketresellauth.appspot.com";
-        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository)
+        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository, IMemberRepository memberRepository)
         {
             _ticketRepository = ticketRepository;
             _categoryRepository = categoryyRepository;
+            _memberRepository = memberRepository;
         }
 
         #region Add Ticket
@@ -38,7 +40,14 @@ namespace Service
             {
                 return "File không hợp lệ";
             }
+            // Check the file extension
+            var allowedExtensions = new[] { ".jpg", ".jpeg" }; // Define allowed extensions
+            var fileExtension = Path.GetExtension(ticketDtos.File.FileName).ToLowerInvariant(); // Get the file extension
 
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return "File phải có định dạng .jpg hoặc .jpeg";
+            }
             using (var memoryStream = new MemoryStream())
             {
                 await ticketDtos.File.CopyToAsync(memoryStream);
@@ -71,7 +80,7 @@ namespace Service
                     SellerId = ticketDtos.SellerId,
                     CategoryId = ticketDtos.CategoryId,
                     PdfFile = downloadUrl,
-                    Status = "Verify",
+                    Status = "Pending",
                     PostedAt = DateTime.Now,
                     StartDate = DateTime.Now,
                     ApprovedBy = null,
@@ -109,72 +118,102 @@ namespace Service
         #region GetAll Ticket
         public async Task<List<TicketResponse>> GetAllTicket()
         {
-            List<TicketResponse> ticketResponse = new List<TicketResponse>();
-            var listTicket = await _ticketRepository.GetAllTickets();
+            try
             {
-                foreach (var item in listTicket)
-                {
-                    var ticket = await _ticketRepository.GetTicketsById(item.TicketId);
-                    var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
-                    if (item.Quantity > 0)
-                    {
-                        var newTicket = new TicketResponse()
-                        {
-                            TicketId = item.TicketId,
-                            Barcode = item.Barcode,
-                            Quantity = item.Quantity,
-                            SeatNumber = item.SeatNumber,
-                            StartDate = item.StartDate,
-                            SellerId = item.SellerId,
-                            CategoryName = category.CategoryName,
-                            PdfFile = item.PdfFile,
-                            Status = item.Status,
-                            PostedAt = item.PostedAt,
-                            ApprovedBy = item.ApprovedBy,
-                            ApprovalDate = item.ApprovalDate,
-                            ProcessingNotes = item.Description,
-                            ModifiedDate = item.ModifiedDate,
 
-                        };
-                        ticketResponse.Add(newTicket);
+
+                List<TicketResponse> ticketResponse = new List<TicketResponse>();
+                var listTicket = await _ticketRepository.GetAllTickets();
+                {
+                    foreach (var item in listTicket)
+                    {
+                        var ticket = await _ticketRepository.GetTicketsById(item.TicketId);
+                        if (ticket == null)
+                        {
+                            throw new Exception($"ticket not found");
+                        }
+                        var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
+                        if (category == null)
+                        {
+                            throw new Exception($"category not found");
+                        }
+                        var member = await _memberRepository.GetMember(ticket.SellerId);
+                        if (member == null)
+                        {
+                            throw new Exception($"member not found");
+                        }
+                        if (item.Quantity > 0)
+                        {
+                            var newTicket = new TicketResponse()
+                            {
+                                TicketId = item.TicketId,
+                                Barcode = item.Barcode,
+                                Quantity = item.Quantity,
+                                Price = item.Price,
+                                SeatNumber = item.SeatNumber,
+                                StartDate = item.StartDate,
+                                SellerName = member?.User?.Username ?? "Unknown",
+                                CategoryName = category.CategoryName,
+                                PdfFile = item.PdfFile,
+                                Status = item.Status,
+                                PostedAt = item.PostedAt,
+                                ApprovedBy = item.ApprovedBy,
+                                ApprovalDate = item.ApprovalDate,
+                                Description = item.Description,
+                                ModifiedDate = item.ModifiedDate,
+
+                            };
+                            ticketResponse.Add(newTicket);
+                        }
                     }
+                    return ticketResponse;
                 }
-                return ticketResponse;
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         #endregion
 
+        #region Get Ticket
         public async Task<TicketResponse> GetTicketById(int ticketId)
         {
             var ticket = await _ticketRepository.GetTicketsById(ticketId);
-            var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
             if(ticket == null)
             {
-                throw new Exception("Ticket not found");
+                throw new Exception($"Ticket {ticketId} not found");
             }
+            var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
             if (category == null)
             {
                 throw new Exception("category not found");
+            }
+            var member = await _memberRepository.GetMember(ticket.SellerId);
+            if (member == null)
+            {
+                throw new Exception("member not found");
             }
             var ticketResponse = new TicketResponse()
             {
                 TicketId = ticket.TicketId,
                 Barcode = ticket.Barcode,
                 Quantity = ticket.Quantity,
+                Price = ticket.Price,
                 SeatNumber = ticket.SeatNumber,
-                StartDate = ticket.StartDate,
-                SellerId = ticket.SellerId,
+                StartDate = ticket.StartDate,                
+                SellerName = member?.User?.Username ?? "Unknown",
                 CategoryName = category.CategoryName,
                 PdfFile = ticket.PdfFile,
                 Status = ticket.Status,
                 PostedAt = ticket.PostedAt,
                 ApprovedBy = ticket.ApprovedBy,
                 ApprovalDate = ticket.ApprovalDate,
-                ProcessingNotes = ticket.Description,
+                 Description= ticket.Description,
                 ModifiedDate = ticket.ModifiedDate,
             };
             return ticketResponse;
         }
+        #endregion
 
         public async Task<string> UpdateTicket(int ticketId, TicketUpdatedtos ticketUpdatedtos)
         {
