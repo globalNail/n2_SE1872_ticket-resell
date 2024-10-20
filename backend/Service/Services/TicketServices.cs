@@ -85,7 +85,7 @@ namespace Service
                     StartDate = DateTime.Now,
                     ApprovedBy = null,
                     ApprovalDate = null,
-                    Description = ticketDtos.ProcessingNotes,
+                    Description = ticketDtos.Description,
                     ModifiedDate = null
                 };
                 var result = await _ticketRepository.AddTicket(ticket);

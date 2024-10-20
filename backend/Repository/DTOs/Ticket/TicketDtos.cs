@@ -25,6 +25,6 @@ namespace Repository.DTOs.Ticket
 
         public IFormFile? File { get; set; }
 
-        public string? ProcessingNotes { get; set; }
+        public string? Description { get; set; }
     }
 }
