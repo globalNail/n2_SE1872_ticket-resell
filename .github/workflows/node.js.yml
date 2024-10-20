@@ -37,9 +37,16 @@ jobs:
               working-directory: ./frontend
 
             - name: Run build
-              run: npm run build
+              run: npm run build --if-present
               working-directory: ./frontend
 
             - name: Run tests
               run: npm test
               working-directory: ./frontend
+ 
+              name: Deploy with gh-pages
+              run: |
+                git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+                npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
