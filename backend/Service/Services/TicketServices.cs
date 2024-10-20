@@ -41,7 +41,7 @@ namespace Service
                 return "File không hợp lệ";
             }
             // Check the file extension
-            var allowedExtensions = new[] { ".jpg", ".jpeg" }; // Define allowed extensions
+            var allowedExtensions = new[] { ".jpg", ".jpeg", "png" }; // Define allowed extensions
             var fileExtension = Path.GetExtension(ticketDtos.File.FileName).ToLowerInvariant(); // Get the file extension
 
             if (!allowedExtensions.Contains(fileExtension))
@@ -142,7 +142,7 @@ namespace Service
                         {
                             throw new Exception($"member not found");
                         }
-                        if (item.Quantity > 0)
+                        if (item.Quantity > 0 && item.Status == "Verified")
                         {
                             var newTicket = new TicketResponse()
                             {

@@ -1,4 +1,5 @@
-﻿using Repository.Interfaces;
+﻿using Repository.DTOs.Member;
+using Repository.Interfaces;
 using Repository.Models;
 using Service.Interface;
 using System;
@@ -18,9 +19,23 @@ namespace Service.Services
             _memberRepository = memberRepository;
         }
 
-        public async Task<bool> AddMember(Member member)
+        public async Task<string> AddMember(MemberDtos memberDtos)
         {
-           return await _memberRepository.AddMember(member) ;
+            if (memberDtos == null)
+            {
+                return "Data is null here. Please enter data";
+            }
+            Member member = new Member()
+            {
+                UserId = memberDtos.UserId,
+                AverageRating = null,
+                RatingCount = null,
+                MembershipDate = null,
+                MembershipStatus = "Active",
+                ModifiedDate = DateTime.Now,
+            };
+            var result = await _memberRepository.AddMember(member);
+            return result ? "Add Success" : "Add Failed";
         }
 
         public async Task DeleteMember(int id)
@@ -37,5 +52,29 @@ namespace Service.Services
         {
            return await _memberRepository.GetMember(id);
         }
+
+        public async Task<string> UpdateMember(int id, MemberRequest memberRequest)
+        {
+            var existingMember = await _memberRepository.GetMember(id);
+            if (existingMember == null)
+            {
+                return "Member not found";
+            }
+            if (memberRequest.RatingCount > 0 && memberRequest.AverageRating > 0)
+            {
+                // Tính lại giá trị trung bình dựa trên giá trị đánh giá mới được cung cấp từ memberRequest
+                existingMember.AverageRating = (existingMember.AverageRating * existingMember.RatingCount + memberRequest.AverageRating) / (existingMember.RatingCount + 1);
+            }
+            existingMember.UserId = memberRequest.UserId;
+            existingMember.RatingCount = memberRequest.RatingCount + 1;
+            existingMember.MembershipDate = DateTime.Now;
+            existingMember.MembershipStatus = memberRequest.MembershipStatus;
+            existingMember.ModifiedDate = DateTime.Now;
+            var result = await _memberRepository.UpdateMember(existingMember);
+
+            return result ? "Update Success " : "Update Failed";
+
+        }
+
     }
 }
