@@ -13,5 +13,6 @@ namespace Repository.Interfaces
         Task<Member> GetMember(int? id);
         Task DeleteMember(int id);
         Task<bool> AddMember(Member member);
+        Task<bool> UpdateMember(Member member);
     }
 }

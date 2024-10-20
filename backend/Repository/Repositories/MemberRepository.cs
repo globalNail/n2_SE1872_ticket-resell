@@ -23,6 +23,12 @@ namespace Repository.Repositories
             _context.Members.Add(member);
            return await _context.SaveChangesAsync() > 0;
         }
+        
+        public async Task<bool> UpdateMember(Member member)
+        {
+            _context.Members.Add(member);
+           return await _context.SaveChangesAsync() > 0;
+        }
 
         public async Task DeleteMember(int id)
         {

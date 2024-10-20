@@ -21,17 +21,22 @@ namespace API.Controllers
 
         //CRUD
         [HttpPost]
-        public async Task<ActionResult<Ticket>> AddTicket(TicketDtos ticketDtos)
+        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
         {
-            //try
-            //{
-                var result = await _services.AddTicket(ticketDtos);
-                return Ok(result);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.AddTicket(ticketDtos);
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
+
         }
 
         //Read
@@ -39,53 +44,85 @@ namespace API.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetAllTickets()
         {
-            try
+            if (ModelState.IsValid)
             {
-                var result = await _services.GetAllTicket();
-                if (result == null)
+                try
                 {
-                    return NotFound();
+                    var result = await _services.GetAllTicket();
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return BadRequest(ModelState);
+
         }
 
         [HttpGet("id")]
         public async Task<IActionResult> GetTicketById([Required] int ticketId)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var ticket = await _services.GetTicketById(ticketId);
-                if (ticket == null)
+                try
                 {
-                    return NotFound();
+                    var ticket = await _services.GetTicketById(ticketId);
+                    if (ticket == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(ticket);
                 }
-                return Ok(ticket);
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return BadRequest(ModelState);
+
         }
 
         // UPDATE
         [HttpPut]
         public async Task<IActionResult> UpdateTicket(int id, TicketUpdatedtos ticketUpdatedtos)
         {
-            //try
-            //{
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.UpdateTicket(id, ticketUpdatedtos);
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
 
-                var result = await _services.UpdateTicket(id, ticketUpdatedtos);
-                return Ok(result);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+        }
+
+        [HttpPut("Staff")]
+        public async Task<IActionResult> UpdateTicketByStaff(int id, TicketStaffDtos ticketUpdatedtos)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.UpdateTicketForStaff(id, ticketUpdatedtos);
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
         }
 
         // DELETE

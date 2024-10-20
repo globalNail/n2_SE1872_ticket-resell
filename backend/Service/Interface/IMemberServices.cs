@@ -1,4 +1,5 @@
-﻿using Repository.Models;
+﻿using Repository.DTOs.Member;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Service.Interface
         Task<List<Member>> GetAllMember();
         Task<Member> GetMember(int id);
         Task DeleteMember(int id);
-        Task<bool> AddMember(Member member);
+        Task<string> AddMember(MemberDtos memberDtos);
+        Task<string> UpdateMember(int id, MemberRequest memberRequest);
     }
 }
