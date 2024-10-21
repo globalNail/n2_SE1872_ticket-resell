@@ -26,5 +26,8 @@ namespace Repository.Interfaces
         bool Update(object id, T entityToUpdate);
         void Update(T entityToUpdate);
         void Save();
+
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate);
+        Task AddAsync(T entity);
     }
 }

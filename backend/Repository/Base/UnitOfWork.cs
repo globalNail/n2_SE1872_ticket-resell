@@ -13,20 +13,29 @@ namespace Repository.Base
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private Swp391ticketResellPlatformContext context;
-        private GenericRepository<Category> categoryRepository;
+        private Swp391ticketResellPlatformContext _context;
+        private GenericRepository<Category> _categoryRepository;
+
         private readonly IWalletRepository _walletRepository;
-        public UnitOfWork(Swp391ticketResellPlatformContext _context, IWalletRepository walletRepository)
+
+        public UnitOfWork(
+            Swp391ticketResellPlatformContext context,
+            IUserRepository userRepository,
+            IUserRoleRepository roleRepository,
+            IWalletRepository walletRepository)
         {
-            context = _context;
+            _context = context;
             _walletRepository = walletRepository;
+            UserRepository = userRepository;
+            UserRoleRepository = roleRepository;
+
         }
 
         public IGenericRepository<Category> CategoryRepository
         {
             get
             {
-                return categoryRepository ??= new GenericRepository<Category>(context);
+                return _categoryRepository ??= new GenericRepository<Category>(_context);
             }
         }
         public IWalletRepository WalletRepository // Return the injected wallet repository
@@ -37,9 +46,13 @@ namespace Repository.Base
             }
         }
 
+        public IUserRepository UserRepository { get; }
+
+        public IUserRoleRepository UserRoleRepository { get; }
+
         public void Save()
         {
-            var validationErrors = context.ChangeTracker.Entries<IValidatableObject>()
+            var validationErrors = _context.ChangeTracker.Entries<IValidatableObject>()
                 .SelectMany(e => e.Entity.Validate(null))
                 .Where(e => e != ValidationResult.Success)
                 .ToArray();
@@ -49,7 +62,12 @@ namespace Repository.Base
                     validationErrors.Select(error => $"Properties {error.MemberNames} Error: {error.ErrorMessage}"));
                 throw new Exception(exceptionMessage);
             }
-            context.SaveChanges();
+            _context.SaveChanges();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -60,7 +78,7 @@ namespace Repository.Base
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
                 disposed = true;
             }

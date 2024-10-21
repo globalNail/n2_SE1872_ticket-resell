@@ -23,7 +23,7 @@ CREATE TABLE UserRole (
 CREATE TABLE [User] (
     UserID INT IDENTITY(1,1) PRIMARY KEY,
     Username NVARCHAR(100) NOT NULL,
-    Password NVARCHAR(255) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
@@ -181,7 +181,7 @@ INSERT INTO UserRole (RoleName) VALUES
 ('seller'),
 ('agent'); 
 
-INSERT INTO [User] (Username, Password, Email, PhoneNumber, Address, RoleID) VALUES
+INSERT INTO [User] (Username, PasswordHash, Email, PhoneNumber, Address, RoleID) VALUES
 ('john_seller', 'password123', 'john@example.com', '123456789', '123 Main St', 4),
 ('maria_buyer', 'password123', 'maria@example.com', '987654321', '456 Another St', 3),
 ('admin', '1', 'admin@admin.com', '', '', 1),

@@ -12,7 +12,9 @@ namespace Repository
     {
         IGenericRepository<Category> CategoryRepository { get; }
         IWalletRepository WalletRepository { get; }
-
+        IUserRepository UserRepository { get; }
+        IUserRoleRepository UserRoleRepository { get; }
         void Save();
+        Task<int> SaveChangesAsync();
     }
 }

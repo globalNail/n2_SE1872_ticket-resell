@@ -102,7 +102,15 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         _context.SaveChanges();
     }
+    public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbSet.FirstOrDefaultAsync(predicate);
+    }
 
+    public virtual async Task AddAsync(TEntity entity)
+    {
+        await _dbSet.AddAsync(entity);
+    }
 
 }
 

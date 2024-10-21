@@ -17,17 +17,17 @@ namespace Service
     {
         private readonly ILogger<VNPayServices> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IUserRepositoy _userRepositoy;
+        private readonly IUserRepository _userRepository;
 
-        public VNPayServices(ILogger<VNPayServices> logger, IConfiguration configuration, IUserRepositoy userRepositoy)
+        public VNPayServices(ILogger<VNPayServices> logger, IConfiguration configuration, IUserRepository userRepository)
         {
             _logger = logger;
             _configuration = configuration;
-            _userRepositoy = userRepositoy;
+            _userRepository = userRepository;
         }
         public string CreatePaymentUrl(HttpContext context, VnPaymentRequestModel model, int userid)
         {
-            var user = _userRepositoy.GetUserById(userid);
+            var user = _userRepository.GetUserById(userid);
             var tick = DateTime.Now.Ticks.ToString();
             var vnpay = new VnPayLibrary();
             string payBackUrl = _configuration["VnPay:PaymentBackUrl"] + $"{user.Result.UserId}";

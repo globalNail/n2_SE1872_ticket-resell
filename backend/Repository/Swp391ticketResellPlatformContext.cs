@@ -328,7 +328,7 @@ public partial class Swp391ticketResellPlatformContext : DbContext
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.ModifiedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.PasswordHash).HasMaxLength(255);
             entity.Property(e => e.PhoneNumber).HasMaxLength(15);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Username).HasMaxLength(100);

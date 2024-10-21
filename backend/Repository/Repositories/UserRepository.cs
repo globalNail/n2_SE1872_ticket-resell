@@ -5,7 +5,7 @@ using Repository.Models;
 
 namespace Repository.Repositories;
 
-public class UserRepository : GenericRepository<User>, IUserRepositoy
+public class UserRepository : GenericRepository<User>, IUserRepository
 {
     private readonly Swp391ticketResellPlatformContext _context;
     public UserRepository(Swp391ticketResellPlatformContext context) : base(context)
@@ -17,4 +17,13 @@ public class UserRepository : GenericRepository<User>, IUserRepositoy
     {
         return await _context.Users.FirstOrDefaultAsync(sc => sc.UserId.Equals(id));
     }
+    public async Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail)
+    {
+        return await _dbSet
+            .Include(u => u.Role)
+            .Include(u => u.Wallet)
+            // .ThenInclude(ur => ur.RoleName)
+            .FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+    }
+
 }
