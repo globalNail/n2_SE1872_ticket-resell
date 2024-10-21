@@ -26,7 +26,7 @@ namespace Repository.Repositories
         
         public async Task<bool> UpdateMember(Member member)
         {
-            _context.Members.Add(member);
+            _context.Members.Update(member);
            return await _context.SaveChangesAsync() > 0;
         }
 
