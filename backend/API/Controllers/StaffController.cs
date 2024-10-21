@@ -1,33 +1,33 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Repository.DTOs.Member;
+using Repository.DTOs.Staff;
 using Service.Interface;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MemberController : ControllerBase
+    public class StaffController : ControllerBase
     {
-        private readonly IMemberServices _services;
+        private readonly IStaffServices _services;
 
-        public MemberController(IMemberServices services)
+        public StaffController(IStaffServices services)
         {
             _services = services;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllMember()
+        public async Task<IActionResult> GetAllStaff()
         {
             if (ModelState.IsValid)
             {
                 try
                 {
 
-                    var result = await _services.GetAllMember();
+                    var result = await _services.GetAllStaff();
                     if (result == null)
                     {
-                        return StatusCode(500, "Failed to getAll the member");
+                        return StatusCode(500, "Failed to getAll the staff");
                     }
                     return Ok(result);
                 }
@@ -40,16 +40,20 @@ namespace API.Controllers
         }
 
         [HttpGet("id")]
-        public async Task<IActionResult> GetMemberById(int id)
+        public async Task<IActionResult> GetStaffById(int? id)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _services.GetMember(id);
+                    if(id == null)
+                    {
+                        return BadRequest("Please enter staff's id");
+                    }
+                    var result = await _services.GetStaffById(id);
                     if (result == null)
                     {
-                        return StatusCode(500, "Failed to get the member");
+                        return StatusCode(500, "Failed to getAll the staff");
                     }
                     return Ok(result);
                 }
@@ -61,26 +65,14 @@ namespace API.Controllers
             return BadRequest(ModelState); // Return a 400 response with validation errors
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteMember(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                await _services.DeleteMember(id);
-                return Ok("Delete Successfully");
-            }
-            return BadRequest(ModelState);
-
-        }
-
         [HttpPost]
-        public async Task<IActionResult> AddMember(MemberDtos memberDtos)
+        public async Task<IActionResult> AddStaff(StaffDtos staffDtos)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _services.AddMember(memberDtos);
+                    var result = await _services.AddStaff(staffDtos);
                     if (result == null)
                     {
                         return StatusCode(500, "Failed to add the member");
@@ -91,32 +83,49 @@ namespace API.Controllers
                 {
                     return StatusCode(500, $"An error occurred: {ex.Message}");
                 }
-
             }
-            return BadRequest(ModelState);
+                return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateMember(int id, MemberRequest memberRequest)
+        public async Task<IActionResult> UpdateStaff(int? id, StaffDtos staffDtos)
         {
             if (ModelState.IsValid)
             {
-                //try
-                //{
-                    var result = await _services.UpdateMember(id, memberRequest);
+                try
+                {
+                    if(id == null)
+                    {
+                        return BadRequest("Please enter the Staff's id");
+                    }
+                    var result = await _services.UpdateStaff(id, staffDtos);
                     if (result == null)
                     {
                         return StatusCode(500, "Failed to update the member");
                     }
                     return Ok(result);
-                //}
-                //catch (Exception ex)
-                //{
-                //    return StatusCode(500, $"An error occurred: {ex.Message}");
-                //}
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStaff(int? id)
+        {
+            if (ModelState.IsValid)
+            {
+                if(id == null || id == 0)
+                {
+                    return BadRequest("Please enter the Staff's id");
+                }
+                await _services.DeleteStaffById(id);
+                return Ok("Delete Successfully");
             }
             return BadRequest(ModelState);
         }
     }
-
 }

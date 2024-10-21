@@ -16,13 +16,15 @@ namespace Service
         private readonly ITicketRepository _ticketRepository;
         private readonly ICategoryyRepository _categoryRepository;
         private readonly IMemberRepository _memberRepository;
+        private readonly IStaffRepository _staffRepository;
         private readonly string _projectId = "ticketresellauth";
         private readonly string _bucketName = "ticketresellauth.appspot.com";
-        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository, IMemberRepository memberRepository)
+        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository, IMemberRepository memberRepository, IStaffRepository staffRepository)
         {
             _ticketRepository = ticketRepository;
             _categoryRepository = categoryyRepository;
             _memberRepository = memberRepository;
+            _staffRepository = staffRepository;
         }
 
         #region Add Ticket
@@ -142,6 +144,7 @@ namespace Service
                         {
                             throw new Exception($"member not found");
                         }
+                        var staff = await _staffRepository.GetStaffById(ticket.ApprovedBy);
                         if (item.Quantity > 0 && item.Status == "Verified")
                         {
                             var newTicket = new TicketResponse()
@@ -157,7 +160,7 @@ namespace Service
                                 PdfFile = item.PdfFile,
                                 Status = item.Status,
                                 PostedAt = item.PostedAt,
-                                ApprovedBy = item.ApprovedBy,
+                                ApprovedBy = staff?.User?.Username ?? "Unknown", 
                                 ApprovalDate = item.ApprovalDate,
                                 Description = item.Description,
                                 ModifiedDate = item.ModifiedDate,
@@ -193,6 +196,7 @@ namespace Service
             {
                 throw new Exception("member not found");
             }
+            var staff = await _staffRepository.GetStaffById(ticket.ApprovedBy);
             var ticketResponse = new TicketResponse()
             {
                 TicketId = ticket.TicketId,
@@ -206,7 +210,7 @@ namespace Service
                 PdfFile = ticket.PdfFile,
                 Status = ticket.Status,
                 PostedAt = ticket.PostedAt,
-                ApprovedBy = ticket.ApprovedBy,
+                ApprovedBy = staff?.User?.Username ?? "Unknown",
                 ApprovalDate = ticket.ApprovalDate,
                  Description= ticket.Description,
                 ModifiedDate = ticket.ModifiedDate,

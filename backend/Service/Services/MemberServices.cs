@@ -60,15 +60,14 @@ namespace Service.Services
             {
                 return "Member not found";
             }
-            if (memberRequest.RatingCount > 0 && memberRequest.AverageRating > 0)
+            if (existingMember.RatingCount > 0 && memberRequest.AverageRating > 0)
             {
                 // Tính lại giá trị trung bình dựa trên giá trị đánh giá mới được cung cấp từ memberRequest
                 existingMember.AverageRating = (existingMember.AverageRating * existingMember.RatingCount + memberRequest.AverageRating) / (existingMember.RatingCount + 1);
             }
-            existingMember.UserId = memberRequest.UserId;
+            existingMember.AverageRating = memberRequest.AverageRating;
             existingMember.RatingCount = memberRequest.RatingCount + 1;
-            existingMember.MembershipDate = DateTime.Now;
-            existingMember.MembershipStatus = memberRequest.MembershipStatus;
+            existingMember.MembershipDate = DateTime.Now;         
             existingMember.ModifiedDate = DateTime.Now;
             var result = await _memberRepository.UpdateMember(existingMember);
 
