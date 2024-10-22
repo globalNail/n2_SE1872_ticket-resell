@@ -1,4 +1,3 @@
-// src/pages/Tickets/ViewTicketPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ticketApi from "../../api/ticketApi";
