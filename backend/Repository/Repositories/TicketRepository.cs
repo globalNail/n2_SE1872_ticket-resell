@@ -51,4 +51,18 @@ public class TicketRepository : ITicketRepository
         _context.Tickets.Update(ticket);
        return await _context.SaveChangesAsync() > 0;
     }
+    public async Task<IEnumerable<Ticket>> GetAllAsync()
+    {
+        return await _context.Tickets
+            .Include(t => t.Category)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Ticket>> GetByCategoryIdAsync(int categoryId)
+    {
+        return await _context.Tickets
+            .Where(t => t.CategoryId == categoryId)
+            .Include(t => t.Category)
+            .ToListAsync();
+    }
 }

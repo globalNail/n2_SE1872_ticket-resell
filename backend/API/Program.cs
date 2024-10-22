@@ -42,26 +42,23 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        policy  =>
+    options.AddPolicy("CorsPolicyDevelopement",
+        policy =>
         {
-            policy.WithOrigins("http://localhost:3910")
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
         });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowReactApp");
+app.UseCors("CorsPolicyDevelopement");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

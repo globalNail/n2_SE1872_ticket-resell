@@ -15,5 +15,8 @@ namespace Repository.Interfaces
         Task<bool> AddTicket(Ticket ticket);
         Task DeleteTicket(int ticketId);
         Task<bool> UpdateTicket(Ticket ticket);
+        Task<IEnumerable<Ticket>> GetAllAsync();
+        Task<IEnumerable<Ticket>> GetByCategoryIdAsync(int categoryId);
+
     }
 }

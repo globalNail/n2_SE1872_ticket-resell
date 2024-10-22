@@ -2,9 +2,11 @@
 using Repository.DTOs.Auth;
 using Repository.DTOs.Order;
 using Repository.DTOs.OrderItem;
+using Repository.DTOs.Ticket;
 using Repository.DTOs.User;
 using Repository.DTOs.Wallet;
 using Repository.Models;
+using Repository.Models.DTOs.Category;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +26,14 @@ namespace Service.Mapper
 
             CreateMap<RegisterDTO, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+            CreateMap<Ticket, TicketReadDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.CategoryName : string.Empty));
 
             CreateMap<User, AuthResponseDTO>();
-
-            //User mapping
+            // Category Mappings
+            CreateMap<Category, CategoryReadDto>();
+            CreateMap<CategoryCreateDto, Category>();
+            //User Mappings
             CreateMap<LoginDTORequest, User>().ReverseMap();
             // Ánh xạ giữa OrderItem và OrderItemResponseDTO
             CreateMap<OrderItem, OrderItemResponseDTO>().ReverseMap();

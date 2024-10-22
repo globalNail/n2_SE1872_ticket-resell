@@ -1,4 +1,5 @@
-﻿using Repository.Interfaces;
+﻿using Repository;
+using Repository.Interfaces;
 using Repository.Models;
 using Service.Interface;
 using System;
@@ -11,16 +12,46 @@ namespace Service
 {
     public class CategoryServices: ICategoryServices
     {
-        private readonly ICategoryyRepository _repository;
 
-        public CategoryServices(ICategoryyRepository repository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CategoryServices(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Category> GetCategoryById(int? id)
+
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return await _repository.GetCategoryById(id);
+            return await _unitOfWork.CategoryRepository.GetAllAsync();
         }
+
+        public async Task<Category?> GetCategoryByIdAsync(int id)
+        {
+            return await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+        }
+
+        public async Task<bool> CreateCategoryAsync(Category category)
+        {
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateCategoryAsync(Category category)
+        {
+            _unitOfWork.CategoryRepository.Update(category);
+            return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteCategoryAsync(int id)
+        {
+            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+            if (category == null)
+                return false;
+
+            _unitOfWork.CategoryRepository.Delete(category);
+            return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+
     }
 }
