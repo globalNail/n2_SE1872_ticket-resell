@@ -11,6 +11,8 @@ public partial class Staff
 
     public string Role { get; set; } = null!;
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
     public virtual User? User { get; set; }

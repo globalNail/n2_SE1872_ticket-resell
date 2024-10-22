@@ -11,5 +11,7 @@ public partial class Wallet
 
     public decimal? Balance { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual User? User { get; set; }
 }

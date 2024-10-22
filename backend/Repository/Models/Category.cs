@@ -9,5 +9,7 @@ public partial class Category
 
     public string CategoryName { get; set; } = null!;
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

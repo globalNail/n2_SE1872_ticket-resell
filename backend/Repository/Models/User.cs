@@ -9,7 +9,7 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string PasswordHash { get; set; } = null!;
 
     public string Email { get; set; } = null!;
 
@@ -19,27 +19,19 @@ public partial class User
 
     public string? ImageUrl { get; set; }
 
-    public decimal? AverageRating { get; set; }
-
-    public int? RatingCount { get; set; }
-
     public int? RoleId { get; set; }
 
     public int? WalletId { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual Business? Business { get; set; }
 
-    public virtual ICollection<Feedback> FeedbackBuyers { get; set; } = new List<Feedback>();
-
-    public virtual ICollection<Feedback> FeedbackSellers { get; set; } = new List<Feedback>();
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual Member? Member { get; set; }
 
     public virtual UserRole? Role { get; set; }
 
     public virtual Staff? Staff { get; set; }
-
-    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
     public virtual Wallet? Wallet { get; set; }
 }

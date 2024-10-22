@@ -15,11 +15,13 @@ public partial class Ticket
 
     public string? SeatNumber { get; set; }
 
+    public DateTime? StartDate { get; set; }
+
     public int? SellerId { get; set; }
 
     public int? CategoryId { get; set; }
 
-    public byte[]? PdfFile { get; set; }
+    public string? PdfFile { get; set; }
 
     public string? Status { get; set; }
 
@@ -29,7 +31,9 @@ public partial class Ticket
 
     public DateTime? ApprovalDate { get; set; }
 
-    public string? ProcessingNotes { get; set; }
+    public string? Description { get; set; }
+
+    public DateTime? ModifiedDate { get; set; }
 
     public virtual Staff? ApprovedByNavigation { get; set; }
 
@@ -39,7 +43,7 @@ public partial class Ticket
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-    public virtual User? Seller { get; set; }
+    public virtual Member? Seller { get; set; }
 
     public virtual ICollection<TransactionProcess> TransactionProcesses { get; set; } = new List<TransactionProcess>();
 }

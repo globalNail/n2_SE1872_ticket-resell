@@ -15,5 +15,7 @@ public partial class ServicePackage
 
     public decimal? DiscountPercentage { get; set; }
 
+    public DateTime? ModifiedDate { get; set; }
+
     public virtual ICollection<Business> Businesses { get; set; } = new List<Business>();
 }
