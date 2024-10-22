@@ -13,7 +13,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/login/Login"; // Import Login page
-import ViewTicketPage from "./pages/tickets/ViewTicketPage"; // Import TicketListPage
+import TicketsPage from "./pages/tickets/TicketsPage"; // Import TicketListPage
 import UploadTicketPage from "./pages/tickets/UploadTicketPage";
 
 function App() {
@@ -33,10 +33,7 @@ function App() {
                     <main className="flex-grow relative">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route
-                                path="/tickets"
-                                element={<ViewTicketPage />}
-                            />
+                            <Route path="/tickets" element={<TicketsPage />} />
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/profile" element={<Profile />} />

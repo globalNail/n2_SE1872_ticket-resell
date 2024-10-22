@@ -1,4 +1,3 @@
-// src/pages/Tickets/TicketsPage.jsx
 import React from "react";
 import useFetchTickets from "../../hooks/useFetchTickets";
 import TicketTable from "../../components/tickets/TicketTable";

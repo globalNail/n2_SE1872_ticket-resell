@@ -10,7 +10,7 @@ const ticketApi = {
         return axiosClient.get(url);
     },
     createTicket: (ticketData) => {
-        const url = "/tickets";
+        const url = "/Ticket";
         return axiosClient.post(url, ticketData, {
             headers: {
                 "Content-Type": "multipart/form-data",
