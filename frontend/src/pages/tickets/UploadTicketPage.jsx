@@ -53,7 +53,7 @@ const UploadTicketPage = () => {
         data.append("Quantity", formData.Quantity || "");
         data.append("SeatNumber", formData.SeatNumber || "");
         data.append("StartDate", formData.StartDate || "");
-        data.append("SellerId", user.id); // Lấy SellerID từ thông tin đăng nhập
+        data.append("SellerId", user.SellerID); // Lấy SellerID từ thông tin đăng nhập
         data.append("CategoryId", formData.CategoryId); // Đảm bảo CategoryId được chọn
         if (formData.PdfFile) {
             data.append("PdfFile", formData.PdfFile);
@@ -79,7 +79,7 @@ const UploadTicketPage = () => {
             <img 
                 src={UploadTicket} 
                 alt="Upload Ticket" 
-                className="absolute inset-0 w-full h-full object-cover" 
+                className="absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover bg-center" 
                 style={{ zIndex: -1 }} // Đặt z-index thấp hơn để làm nền
             />
             <div className="container mx-auto px-4 py-8 relative z-10"> {/* z-10 để nội dung nằm trên hình ảnh */}

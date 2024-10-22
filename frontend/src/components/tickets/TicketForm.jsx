@@ -84,33 +84,30 @@ const TicketForm = ({
                     />
                 </div>
 
-                {/* Category ID (Dropdown) */}
-                <div className="mb-4">
-                    <label className="block text-white">
-                        Category<span className="text-red-500">*</span>
-                    </label>
-                    {loadingCategories ? (
-                        <div className="text-gray-500">Loading categories...</div>
-                    ) : (
-                        <select
-                            name="CategoryId"
-                            value={formData.CategoryId}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((category) => (
-                                <option
-                                    key={category.CategoryId}
-                                    value={category.CategoryId}
-                                >
-                                    {category.Name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
+              {/* Category ID (Dropdown) */}
+<div className="mb-4">
+    <label className="block text-white">
+        Category<span className="text-red-500">*</span>
+    </label>
+    <select
+        name="CategoryId"
+        value={formData.CategoryId}
+        onChange={handleChange}
+        required
+        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+    >
+        <option value="">Select Category</option>
+        {/* Danh sách category tĩnh */}
+        <option value="Football">Football</option>
+        <option value="Tennis">Tennis</option>
+        <option value="Basketball">Basketball</option>
+        <option value="Golf">Golf</option>
+        <option value="Event">Event</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Travel">Travel</option>
+        <option value="Shows">Shows</option>
+    </select>
+</div>
 
                 {/* Pdf File */}
                 <div className="mb-4">
