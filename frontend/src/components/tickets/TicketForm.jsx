@@ -1,4 +1,3 @@
-// src/components/tickets/TicketForm.jsx
 import React from "react";
 
 const TicketForm = ({

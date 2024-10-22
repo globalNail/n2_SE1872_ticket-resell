@@ -1,4 +1,3 @@
-import { updateTicket } from "../services/TicketApi";
 import axiosClient from "./axiosClient";
 
 const ticketApi = {
@@ -21,7 +20,6 @@ const ticketApi = {
     updateTicket: async (id, ticket) => {
         await api.put(`/Ticket/${id}`, ticket);
     },
-    // Các phương thức khác nếu cần
 };
 
 export default ticketApi;

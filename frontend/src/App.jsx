@@ -5,8 +5,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/common/Header";
 import Home from "./pages/Home";
 import StaffApproval from "./pages/verify/StaffApproval";
-import TicketList from "./components/ticket/TicketList";
-import TicketDetails from "./pages/TicketDetails";
 import LoginModal from "./components/LoginModal";
 import Modal from "./components/common/Modal";
 import Signup from "./pages/Signup";
@@ -14,8 +12,9 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import UpTicket from "./pages/UpTicket";
 import Login from "./pages/login/Login"; // Import Login page
+import ViewTicketPage from "./pages/tickets/ViewTicketPage"; // Import TicketListPage
+import UploadTicketPage from "./pages/tickets/UploadTicketPage";
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -34,10 +33,9 @@ function App() {
                     <main className="flex-grow relative">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/tickets" element={<TicketList />} />
                             <Route
-                                path="/tickets/:id"
-                                element={<TicketDetails />}
+                                path="/tickets"
+                                element={<ViewTicketPage />}
                             />
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/login" element={<Login />} />
@@ -47,7 +45,7 @@ function App() {
                                 path="/up-ticket"
                                 element={
                                     <ProtectedRoute>
-                                        <UpTicket />
+                                        <UploadTicketPage />
                                     </ProtectedRoute>
                                 }
                             />
