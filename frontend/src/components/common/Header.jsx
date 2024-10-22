@@ -25,14 +25,13 @@ const Header = ({ onLoginClick }) => {
     };
 
     return (
-        <header
-            className="flex justify-between items-center p-4 fixed w-full z-10"
-            style={{
-                backgroundImage: 'url("/path/to/your/background-image.jpg")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-            }}
-        >
+        <header 
+        className="flex justify-between items-center p-4 absolute top-0 left-0 w-full z-10"
+        style={{
+            //background: "rgba(255, 255, 255, 0.5)", // Tạo một lớp nền trong suốt
+            //backdropFilter: "blur(10px)", // Hiệu ứng làm mờ nền sau header
+        }}
+    >
             <Link to="/" className="px-6 py-3 text-2xl font-bold text-white">
                 MyApp
             </Link>

@@ -19,7 +19,7 @@ const TicketForm = ({
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
                 {/* Barcode */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">
+                    <label className="block text-white">
                         Barcode<span className="text-red-500">*</span>
                     </label>
                     <input
@@ -34,7 +34,7 @@ const TicketForm = ({
 
                 {/* Price */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">
+                    <label className="block text-white">
                         Price<span className="text-red-500">*</span>
                     </label>
                     <input
@@ -50,7 +50,7 @@ const TicketForm = ({
 
                 {/* Quantity */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">Quantity</label>
+                    <label className="block text-white">Quantity</label>
                     <input
                         type="number"
                         name="Quantity"
@@ -62,7 +62,7 @@ const TicketForm = ({
 
                 {/* Seat Number */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">Seat Number</label>
+                    <label className="block text-white">Seat Number</label>
                     <input
                         type="text"
                         name="SeatNumber"
@@ -74,7 +74,7 @@ const TicketForm = ({
 
                 {/* Start Date */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">Start Date</label>
+                    <label className="block text-white">Start Date</label>
                     <input
                         type="datetime-local"
                         name="StartDate"
@@ -84,27 +84,13 @@ const TicketForm = ({
                     />
                 </div>
 
-                {/* Seller ID */}
-                <div className="mb-4">
-                    <label className="block text-gray-700">Seller ID</label>
-                    <input
-                        type="number"
-                        name="SellerId"
-                        value={formData.SellerId}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
                 {/* Category ID (Dropdown) */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">
+                    <label className="block text-white">
                         Category<span className="text-red-500">*</span>
                     </label>
                     {loadingCategories ? (
-                        <div className="text-gray-500">
-                            Loading categories...
-                        </div>
+                        <div className="text-gray-500">Loading categories...</div>
                     ) : (
                         <select
                             name="CategoryId"
@@ -128,7 +114,7 @@ const TicketForm = ({
 
                 {/* Pdf File */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">PDF File</label>
+                    <label className="block text-white">PDF File</label>
                     <input
                         type="file"
                         name="PdfFile"
@@ -140,7 +126,7 @@ const TicketForm = ({
 
                 {/* Description */}
                 <div className="mb-4">
-                    <label className="block text-gray-700">Description</label>
+                    <label className="block text-white">Description</label>
                     <textarea
                         name="Description"
                         value={formData.Description}

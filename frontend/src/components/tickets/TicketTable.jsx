@@ -5,69 +5,42 @@ const TicketTable = ({ tickets }) => {
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-200">
-                    <tr>
-                        <th className="py-3 px-6 text-left">ID</th>
-                        <th className="py-3 px-6 text-left">Barcode</th>
-                        <th className="py-3 px-6 text-left">Price</th>
-                        <th className="py-3 px-6 text-left">Quantity</th>
-                        <th className="py-3 px-6 text-left">Seat Number</th>
-                        <th className="py-3 px-6 text-left">Start Date</th>
-                        <th className="py-3 px-6 text-left">Status</th>
-                        <th className="py-3 px-6 text-left">Actions</th>
-                        {/* Add more columns as needed */}
-                    </tr>
-                </thead>
                 <tbody>
-                    {tickets.map((ticket) => (
-                        <tr
-                            key={ticket.ticketId}
-                            className="border-b hover:bg-gray-100"
-                        >
-                            <td className="py-4 px-6">{ticket.ticketId}</td>
-                            <td className="py-4 px-6">{ticket.Barcode}</td>
-                            <td className="py-4 px-6">
-                                {typeof ticket.Price === "number"
-                                    ? ticket.Price.toFixed(2)
-                                    : "N/A"}{" "}
-                            </td>
-                            <td className="py-4 px-6">
-                                {ticket.Quantity || "N/A"}
-                            </td>
-                            <td className="py-4 px-6">
-                                {ticket.seatNumber || "N/A"}
-                            </td>
-                            <td className="py-4 px-6">
-                                {ticket.StartDate
-                                    ? new Date(
-                                          ticket.StartDate
-                                      ).toLocaleString()
-                                    : "N/A"}
-                            </td>
-                            <td className="py-4 px-6">
-                                <span
-                                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                        ticket.Status === "Verified"
-                                            ? "bg-green-100 text-green-800"
-                                            : ticket.Status === "Sold"
-                                            ? "bg-red-100 text-red-800"
-                                            : "bg-yellow-100 text-yellow-800"
-                                    }`}
-                                >
-                                    {ticket.status || "N/A"}
-                                </span>
-                            </td>
-                            <td className="py-4 px-6">
-                                <Link
-                                    to={`/tickets/${ticket.TicketId}`}
-                                    className="text-blue-500 hover:underline"
-                                >
-                                    View
-                                </Link>
-                                {/* Bạn có thể thêm các hành động khác như Edit, Delete */}
-                            </td>
-                        </tr>
-                    ))}
+                    {tickets.map((ticket) => {
+                        const startDate = new Date(ticket.StartDate);
+                        const day = startDate.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+                        const date = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        const time = startDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                        
+                        return (
+                            <tr key={ticket.ticketId} className="border-b hover:bg-gray-100">
+                                {/* Phần hiển thị ngày giờ bên trái */}
+                                <td className="py-4 px-6 text-center">
+                                    <div className="font-bold text-black-600">{day}</div>
+                              
+                                    {/* Hiển thị SellerID */}
+                                    <div className="text-gray-400 text-sm mt-2">Seller: {ticket.SellerID || "N/A"}</div>
+                                </td>
+                                {/* Phần hiển thị thông tin sự kiện và nút Tickets */}
+                                <td className="py-4 px-6 flex justify-between items-center">
+                                    <div>
+                                        <div className="font-bold text-lg">{ticket.eventName || "Event Name"}</div>
+                                        <div className="text-gray-500">{ticket.venue || "Venue"} - {ticket.location || "Location"}</div>
+                                    </div>
+                                    <div className="text-right">
+                                        <Link to={`/tickets/${ticket.TicketId}`} className="bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500">
+                                            Tickets
+                                        </Link>
+                                        {/* Hiển thị giá vé */}
+                                        <div className="font-bold text-gray-700 mt-2">
+                                            ${typeof ticket.Price === "number" ? ticket.Price.toFixed(2) : "N/A"}
+                                        </div>
+                                        <div className="text-red-500 text-xs mt-2">Limited seats available!</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>

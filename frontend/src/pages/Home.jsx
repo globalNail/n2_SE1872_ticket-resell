@@ -119,103 +119,74 @@ function Home() {
             </section>
 
             {/* Ticket Categories Section */}
-            <section className="mt-12">
-                <h2 className="text-2xl font-semibold mb-4">
-                    Ticket Categories
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <section className="mt-12 relative">
+                <h2 className="text-2xl font-semibold mb-4">Ticket Categories</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
                     {categoriesToDisplay.map((category, index) => (
                         <div
                             key={index}
-                            className="group border rounded shadow p-4 h-60 overflow-hidden"
+                            className="group relative border rounded shadow h-60 overflow-hidden"
                         >
-                            <h3 className="text-xl font-bold">
-                                {category.name}
-                            </h3>
+                            {/* Hình ảnh */}
                             <img
                                 src={category.image}
                                 alt={category.name}
-                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                                className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-110"
                             />
-                            <Link to={category.link}>
-                                <button className="mt-2 text-white px-4 py-2 rounded hover:bg-green-600">
+                            {/* Tên Category hiển thị trên hình */}
+                            <h3 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                {category.name}
+                            </h3>
+                            {/* Nút */}
+                            <Link to={category.link} className="absolute bottom-4 right-4">
+                                <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                                     {category.name}
                                 </button>
                             </Link>
                         </div>
                     ))}
                 </div>
-                <div className="text-right mt-4">
-                    <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                        onClick={handleNextClick}
-                    >
-                        →
-                    </button>
-                </div>
+                {/* Nút mũi tên */}
+                <button
+                    className="arrow-button absolute top-1/2 right-0 transform -translate-y-1/2  text-white px-4 py-2 rounded hover: transition-all duration-300 group-hover:translate-x-2"
+                    onClick={handleNextClick}
+                >
+                    →
+                </button>
             </section>
 
             {/* Featured Tickets Section */}
-            <section>
-                <h2 className="text-2xl font-semibold mb-4">
-                    Featured Tickets
-                </h2>
+            <section className="mt-12 mb-0 flex-grow">
+                <h2 className="text-2xl font-semibold mb-4">Featured Tickets</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="group border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">
-                            Concert Anh Trai "Say Hi"
-                        </h3>
-                        <div className="overflow-hidden">
+                    {[
+                        { name: "Concert Anh Trai 'Say Hi'", price: "$50", date: "2024-05-20", image: concertImage, link: "/tickets/1" },
+                        { name: "Tàu Bắc Nam", price: "$75", date: "2024-06-15", image: sportImage, link: "/tickets/2" },
+                        { name: "VBA", price: "$60", date: "2024-07-10", image: theaterImage, link: "/tickets/3" }
+                    ].map((ticket, index) => (
+                        <div key={index} className="group relative border rounded shadow h-65 overflow-hidden">
                             <img
-                                src={concertImage}
-                                alt="Concert A"
-                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                                src={ticket.image}
+                                alt={ticket.name}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                             />
+                            <div className="absolute inset-0 bg-black bg-opacity-50 text-white p-4 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div>
+                                    <h3 className="text-xl font-bold">{ticket.name}</h3>
+                                    <p>Price: {ticket.price}</p>
+                                    <p>Date: {ticket.date}</p>
+                                </div>
+                                <Link to={ticket.link}>
+                                    <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                        View Details
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
-                        <p>Price: $50</p>
-                        <p>Date: 2024-05-20</p>
-                        <Link to="/tickets/1">
-                            <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                View Details
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="group border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">Tàu Bắc Nam</h3>
-                        <div className="overflow-hidden">
-                            <img
-                                src={sportImage}
-                                alt="Sports Event B"
-                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
-                            />
-                        </div>
-                        <p>Price: $75</p>
-                        <p>Date: 2024-06-15</p>
-                        <Link to="/tickets/2">
-                            <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                View Details
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="group border rounded shadow p-4 h-65">
-                        <h3 className="text-xl font-bold">VBA</h3>
-                        <div className="overflow-hidden">
-                            <img
-                                src={theaterImage}
-                                alt="Theater C"
-                                className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
-                            />
-                        </div>
-                        <p>Price: $60</p>
-                        <p>Date: 2024-07-10</p>
-                        <Link to="/tickets/3">
-                            <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                View Details
-                            </button>
-                        </Link>
-                    </div>
+                    ))}
                 </div>
             </section>
+
             {/* Footer Section */}
             <footer className="bg-gray-800 text-white py-10 mt-20">
                 <div className="container mx-auto text-center">

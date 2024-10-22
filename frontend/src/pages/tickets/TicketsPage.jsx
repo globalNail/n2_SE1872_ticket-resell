@@ -28,9 +28,9 @@ const TicketsPage = () => {
                 <h1 className="text-3xl font-bold">All Tickets</h1>
                 <Link
                     to="/tickets/upload"
-                    className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-colors"
+                    
                 >
-                    Upload New Ticket
+                 
                 </Link>
             </div>
             {tickets.length === 0 ? (
