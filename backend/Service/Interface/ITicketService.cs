@@ -11,6 +11,7 @@ namespace Service.Interface
     public interface ITicketService
     {
         Task<List<TicketResponse>> GetAllTicket();
+        Task<List<TicketResponse>> GetAllTicketForStaff();
         Task<TicketResponse> GetTicketById(int ticketId);
         Task<int> CountTicket();
         Task<string> AddTicket(TicketDtos ticketDtos);
