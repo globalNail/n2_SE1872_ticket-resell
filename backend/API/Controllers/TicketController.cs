@@ -19,9 +19,9 @@ namespace API.Controllers
             _services = ticketService;
         }
 
-        //CRUD
+        //ADD
         [HttpPost]
-        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
+        public async Task<IActionResult> AddTicket([FromBody]TicketDtos ticketDtos)
         {
             if (ModelState.IsValid)
             {
@@ -39,7 +39,7 @@ namespace API.Controllers
 
         }
 
-        //Read
+        //GET
 
         [HttpGet()]
         public async Task<IActionResult> GetAllTickets()
@@ -49,6 +49,29 @@ namespace API.Controllers
                 try
                 {
                     var result = await _services.GetAllTicket();
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [HttpGet("Staff")]
+        public async Task<IActionResult> GetAllTicketsForStaff()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.GetAllTicketForStaff();
                     if (result == null)
                     {
                         return NotFound();
@@ -89,7 +112,7 @@ namespace API.Controllers
 
         // UPDATE
         [HttpPut]
-        public async Task<IActionResult> UpdateTicket(int id, TicketUpdatedtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicket([Required] int id, [FromBody] TicketUpdatedtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {
@@ -108,12 +131,12 @@ namespace API.Controllers
         }
 
         [HttpPut("Staff")]
-        public async Task<IActionResult> UpdateTicketByStaff(int id, TicketStaffDtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicketByStaff([Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {
                 try
-                {
+                {               
                     var result = await _services.UpdateTicketForStaff(id, ticketUpdatedtos);
                     return Ok(result);
                 }
@@ -140,20 +163,20 @@ namespace API.Controllers
             }
         }
 
-        // COUNT
-        [HttpGet("count")]
-        public async Task<ActionResult<int>> GetTicketCount()
-        {
-            try
-            {
-                var count = await _services.CountTicket();
-                return Ok(count); // Return the count of tickets
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //// COUNT
+        //[HttpGet("count")]
+        //public async Task<ActionResult<int>> GetTicketCount()
+        //{
+        //    try
+        //    {
+        //        var count = await _services.CountTicket();
+        //        return Ok(count); // Return the count of tickets
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
     }
 }
