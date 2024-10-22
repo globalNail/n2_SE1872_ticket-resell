@@ -1,18 +1,20 @@
+// src/App.jsx
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
-import TicketList from "./components/ticket/TicketList";
-import TicketDetails from "./pages/TicketDetails";
+import StaffApproval from "./pages/verify/StaffApproval";
 import LoginModal from "./components/LoginModal";
 import Modal from "./components/common/Modal";
-import Signup from "./pages/SignUp";
+import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/error/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./pages/login/Login"; // Import Login page
+import TicketsPage from "./pages/tickets/TicketsPage"; // Import TicketListPage
+import UploadTicketPage from "./pages/tickets/UploadTicketPage";
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -28,19 +30,27 @@ function App() {
                     <Header onLoginClick={openLoginModal} />
 
                     {/* Main Content */}
-                    <main className="flex-grow">
+                    <main className="flex-grow relative">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/tickets" element={<TicketList />} />
-                            <Route
-                                path="/tickets/:id"
-                                element={<TicketDetails />}
-                            />
-                            {/* <Route path="/sell" element={<SellTicket />} /> */}
+                            <Route path="/tickets" element={<TicketsPage />} />
                             <Route path="/signup" element={<Signup />} />
+                            <Route path="/login" element={<Login />} />
                             <Route path="/profile" element={<Profile />} />
 
-                            {/* Protected Admin Route */}
+                            <Route
+                                path="/up-ticket"
+                                element={
+                                    <ProtectedRoute>
+                                        <UploadTicketPage />
+                                    </ProtectedRoute>
+                                }
+                            />
+
+                            <Route
+                                path="/staff-approval"
+                                Component={StaffApproval}
+                            />
                             <Route
                                 path="/admin"
                                 element={
@@ -54,9 +64,6 @@ function App() {
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
-
-                    {/* Footer Component */}
-                    <Footer />
 
                     {/* Login Modal */}
                     <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
