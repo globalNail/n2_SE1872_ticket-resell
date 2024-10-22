@@ -21,19 +21,21 @@ const TicketTable = ({ tickets }) => {
                 <tbody>
                     {tickets.map((ticket) => (
                         <tr
-                            key={ticket.TicketId}
+                            key={ticket.ticketId}
                             className="border-b hover:bg-gray-100"
                         >
-                            <td className="py-4 px-6">{ticket.TicketId}</td>
+                            <td className="py-4 px-6">{ticket.ticketId}</td>
                             <td className="py-4 px-6">{ticket.Barcode}</td>
                             <td className="py-4 px-6">
-                                {ticket.Price.toFixed(2)}
+                                {typeof ticket.Price === "number"
+                                    ? ticket.Price.toFixed(2)
+                                    : "N/A"}{" "}
                             </td>
                             <td className="py-4 px-6">
                                 {ticket.Quantity || "N/A"}
                             </td>
                             <td className="py-4 px-6">
-                                {ticket.SeatNumber || "N/A"}
+                                {ticket.seatNumber || "N/A"}
                             </td>
                             <td className="py-4 px-6">
                                 {ticket.StartDate
@@ -45,14 +47,14 @@ const TicketTable = ({ tickets }) => {
                             <td className="py-4 px-6">
                                 <span
                                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                        ticket.Status === "Open"
+                                        ticket.Status === "Verified"
                                             ? "bg-green-100 text-green-800"
-                                            : ticket.Status === "Closed"
+                                            : ticket.Status === "Sold"
                                             ? "bg-red-100 text-red-800"
                                             : "bg-yellow-100 text-yellow-800"
                                     }`}
                                 >
-                                    {ticket.Status || "N/A"}
+                                    {ticket.status || "N/A"}
                                 </span>
                             </td>
                             <td className="py-4 px-6">

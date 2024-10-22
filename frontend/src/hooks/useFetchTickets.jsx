@@ -10,7 +10,12 @@ const useFetchTickets = () => {
         const fetchTickets = async () => {
             try {
                 const response = await ticketApi.getAllTickets();
-                setTickets(response.data);
+                console.log(response.data);
+                const validatedTickets = response.data.map((ticket) => ({
+                    ...ticket,
+                    Price: typeof ticket.Price === "number" ? ticket.Price : 0,
+                }));
+                setTickets(validatedTickets);
             } catch (err) {
                 setError(
                     err.response?.data?.message || "Error fetching tickets"
