@@ -185,9 +185,9 @@ namespace Service
             }
         }
 
-        public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
+        public async Task<List<Ticket>> GetAllTicketsAsync()
         {
-            return await _unitOfWork.TicketRepository.GetAllAsync();
+            return await _unitOfWork.TicketRepository.GetAllTickets();
         }
         public async Task<IEnumerable<Ticket>> GetTicketsByCategoryAsync(int categoryId)
         {

@@ -11,7 +11,7 @@ namespace Service.Interface
     public interface ITicketService
     {
         Task<List<TicketResponse>> GetAllTicket();
-        Task<IEnumerable<Ticket>> GetAllTicketsAsync();
+        Task<List<Ticket>> GetAllTicketsAsync();
         Task<IEnumerable<Ticket>> GetTicketsByCategoryAsync(int categoryId);
         Task<List<TicketResponse>> GetAllTicketForStaff();
         Task<TicketResponse> GetTicketById(int ticketId);
