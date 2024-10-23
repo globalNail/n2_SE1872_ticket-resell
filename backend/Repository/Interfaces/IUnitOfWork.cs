@@ -10,10 +10,11 @@ namespace Repository
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Category> CategoryRepository { get; }
         IWalletRepository WalletRepository { get; }
         IUserRepository UserRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
+        ITicketRepository TicketRepository { get; }
         void Save();
         Task<int> SaveChangesAsync();
     }

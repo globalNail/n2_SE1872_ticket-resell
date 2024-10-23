@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-    public interface ICategoryyRepository
+    public interface ICategoryRepository : IGenericRepository<Category>
     {
+        Task<IEnumerable<Category>> GetAllAsync();
+        Task<Category?> GetByIdAsync(int id);
         Task<Category> GetCategoryById(int? id);
     }
 }

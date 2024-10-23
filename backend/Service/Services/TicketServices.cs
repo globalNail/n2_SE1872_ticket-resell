@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Storage.V1;
+using Repository;
 using Repository.DTOs.Ticket;
 using Repository.Interfaces;
 using Repository.Models;
@@ -14,18 +15,21 @@ namespace Service
 {
     public class TicketServices : ITicketService
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITicketRepository _ticketRepository;
-        private readonly ICategoryyRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMemberRepository _memberRepository;
         private readonly IStaffRepository _staffRepository;
         private readonly string _projectId = "ticketresellauth";
         private readonly string _bucketName = "ticketresellauth.appspot.com";
-        public TicketServices(ITicketRepository ticketRepository, ICategoryyRepository categoryyRepository, IMemberRepository memberRepository, IStaffRepository staffRepository)
+        public TicketServices(IUnitOfWork unitOfWork, ITicketRepository ticketRepository, ICategoryRepository categoryRepository, IMemberRepository memberRepository, IStaffRepository staffRepository)
         {
             _ticketRepository = ticketRepository;
-            _categoryRepository = categoryyRepository;
+            _categoryRepository = categoryRepository;
             _memberRepository = memberRepository;
             _staffRepository = staffRepository;
+            _unitOfWork = unitOfWork;
+
         }
 
         #region Add Ticket
@@ -129,8 +133,6 @@ namespace Service
         {
             try
             {
-
-
                 List<TicketResponse> ticketResponse = new List<TicketResponse>();
                 var listTicket = await _ticketRepository.GetAllTickets();
                 {
@@ -183,6 +185,16 @@ namespace Service
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<Ticket>> GetAllTicketsAsync()
+        {
+            return await _unitOfWork.TicketRepository.GetAllTickets();
+        }
+        public async Task<IEnumerable<Ticket>> GetTicketsByCategoryAsync(int categoryId)
+        {
+            return await _unitOfWork.TicketRepository.GetByCategoryIdAsync(categoryId);
+        }
+
         #endregion
 
         #region Get Ticket

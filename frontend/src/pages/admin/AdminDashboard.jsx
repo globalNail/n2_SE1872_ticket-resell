@@ -23,6 +23,13 @@ function AdminDashboard() {
                         quantity: 2,
                         status: "pending",
                     },
+                    {
+                        ticketId:2,
+                        barcode:"QEWTRU9828",
+                        price: 990,
+                        quantity:5,
+                        status:"pending",
+                    }
                     // ... more tickets
                 ]);
             } catch (err) {
