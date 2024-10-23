@@ -10,8 +10,9 @@ namespace Repository.Interfaces
     public interface ITicketRepository
     {
         Task<List<Ticket>> GetAllTickets();
+        Task<IEnumerable<Ticket>> GetByCategoryIdAsync(int categoryId);
+        Task<Ticket?> GetTicketsById(int Id);
         Task<int> CountTicket();
-        Task<Ticket> GetTicketsById(int Id);
         Task<bool> AddTicket(Ticket ticket);
         Task DeleteTicket(int ticketId);
         Task<bool> UpdateTicket(Ticket ticket);

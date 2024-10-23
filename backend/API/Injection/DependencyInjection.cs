@@ -30,7 +30,7 @@ namespace API.Injection
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
-            services.AddScoped<ICategoryyRepository, CategoryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
 
@@ -52,6 +52,7 @@ namespace API.Injection
             services.AddScoped<IMemberServices, MemberServices>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IStaffServices, StaffServices>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
 
             //UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();

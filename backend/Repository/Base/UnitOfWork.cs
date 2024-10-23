@@ -22,22 +22,20 @@ namespace Repository.Base
             Swp391ticketResellPlatformContext context,
             IUserRepository userRepository,
             IUserRoleRepository roleRepository,
-            IWalletRepository walletRepository)
+            IWalletRepository walletRepository,
+            ICategoryRepository categoryRepository,
+            ITicketRepository ticketRepository
+            )
         {
             _context = context;
             _walletRepository = walletRepository;
             UserRepository = userRepository;
             UserRoleRepository = roleRepository;
-
+            CategoryRepository = categoryRepository;
+            TicketRepository = ticketRepository;
         }
 
-        public IGenericRepository<Category> CategoryRepository
-        {
-            get
-            {
-                return _categoryRepository ??= new GenericRepository<Category>(_context);
-            }
-        }
+
         public IWalletRepository WalletRepository // Return the injected wallet repository
         {
             get
@@ -49,6 +47,10 @@ namespace Repository.Base
         public IUserRepository UserRepository { get; }
 
         public IUserRoleRepository UserRoleRepository { get; }
+
+        public ICategoryRepository CategoryRepository { get; }
+
+        public ITicketRepository TicketRepository { get; }
 
         public void Save()
         {

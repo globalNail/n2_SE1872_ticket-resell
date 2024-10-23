@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Repository.DTOs.Ticket;
 using Repository.Models;
-using Repository.Repositories;
 using Service.Interface;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,12 +12,39 @@ namespace API.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _services;
-        public TicketController(ITicketService ticketService)
+        private readonly IMapper _mapper;
+        public TicketController(ITicketService ticketService, IMapper mapper)
         {
             _services = ticketService;
+            _mapper = mapper;
         }
 
-        //ADD
+        /// <summary>
+        /// Lấy danh sách tất cả các ticket hoặc lọc theo categoryId
+        /// GET: api/Tickets?categoryId=1
+        /// </summary>
+        /// <param name="categoryId">ID của category để lọc</param>
+        /// <returns>Danh sách tickets</returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TicketReadDto>>> GetTickets([FromQuery] int? categoryId)
+        {
+            IEnumerable<Ticket> tickets;
+
+            if (categoryId.HasValue)
+            {
+                tickets = await _services.GetTicketsByCategoryAsync(categoryId.Value);
+            }
+            else
+            {
+                tickets = await _services.GetAllTicketsAsync();
+            }
+
+            var ticketsReadDto = _mapper.Map<IEnumerable<TicketReadDto>>(tickets);
+            return Ok(ticketsReadDto);
+        }
+        //CRUD
+
+        #region Add
         [HttpPost]
         public async Task<IActionResult> AddTicket([FromBody]TicketDtos ticketDtos)
         {
@@ -38,31 +63,33 @@ namespace API.Controllers
             return BadRequest(ModelState);
 
         }
-
-        //GET
-
-        [HttpGet()]
-        public async Task<IActionResult> GetAllTickets()
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var result = await _services.GetAllTicket();
-                    if (result == null)
-                    {
-                        return NotFound();
-                    }
-                    return Ok(result);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"An error occurred: {ex.Message}");
-                }
-            }
-            return BadRequest(ModelState);
-
-        }
+  #endregion
+        //Read
+  //
+  //       #region GetAllTickets
+  //       [HttpGet()]
+  //       public async Task<IActionResult> GetAllTickets()
+  //       {
+  //           if (ModelState.IsValid)
+  //           {
+  //               try
+  //               {
+  //                   var result = await _services.GetAllTicket();
+  //                   if (result == null)
+  //                   {
+  //                       return NotFound();
+  //                   }
+  //                   return Ok(result);
+  //               }
+  //               catch (Exception ex)
+  //               {
+  //                   return StatusCode(500, $"An error occurred: {ex.Message}");
+  //               }
+  //           }
+  //           return BadRequest(ModelState);
+  //
+  //       }
+  // #endregion
 
         [HttpGet("Staff")]
         public async Task<IActionResult> GetAllTicketsForStaff()
@@ -136,7 +163,7 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {               
+                {
                     var result = await _services.UpdateTicketForStaff(id, ticketUpdatedtos);
                     return Ok(result);
                 }
@@ -163,20 +190,20 @@ namespace API.Controllers
             }
         }
 
-        //// COUNT
-        //[HttpGet("count")]
-        //public async Task<ActionResult<int>> GetTicketCount()
-        //{
-        //    try
-        //    {
-        //        var count = await _services.CountTicket();
-        //        return Ok(count); // Return the count of tickets
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        // COUNT
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetTicketCount()
+        {
+            try
+            {
+                var count = await _services.CountTicket();
+                return Ok(count); // Return the count of tickets
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
