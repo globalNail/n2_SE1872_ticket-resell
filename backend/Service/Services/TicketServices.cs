@@ -264,7 +264,7 @@ namespace Service
         }
         #endregion
 
-        #region Verified
+        #region Update ticket for staff 
         public async Task<string> UpdateTicketForStaff(int staffId, int ticketId, TicketStaffDtos ticketUpdatedtos)
         {
 
@@ -355,5 +355,18 @@ namespace Service
         }
         #endregion
 
+
+        //public async Task<string> VerifyTicket(VerifyTicketRequest request)
+        //{
+        //    var ticket = await _ticketRepository.VerifyTicket(request.Barcode, request.CategoryId);
+        //    if (ticket == null)
+        //    {
+        //        return "Ticket not found or does not match the event.";
+        //    }
+        //    if (ticket.Status == "Sold")
+        //    {
+        //        return "Ticket has already been sold.";
+        //    }
+        //}
     }
 }
