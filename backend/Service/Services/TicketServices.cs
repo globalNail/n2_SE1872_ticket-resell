@@ -5,6 +5,7 @@ using Repository.Models;
 using Service.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -251,8 +252,8 @@ namespace Service
         }
         #endregion
 
-        #region Update Ticket for Staff
-        public async Task<string> UpdateTicketForStaff(int ticketId, TicketStaffDtos ticketUpdatedtos)
+        #region Verified
+        public async Task<string> UpdateTicketForStaff(int staffId, int ticketId, TicketStaffDtos ticketUpdatedtos)
         {
 
             if (ticketId == null || ticketId == 0)
@@ -263,13 +264,18 @@ namespace Service
             {
                 return "Data is null";
             }
+            var staff = await _staffRepository.GetStaffById(staffId);
+            if (staff == null)
+            {
+                return "Staff not found";
+            }
             var existingTicket = await _ticketRepository.GetTicketsById(ticketId);
             if (existingTicket == null)
             {
                 return "ticket not found";
             }
             existingTicket.Status = ticketUpdatedtos.Status;
-            existingTicket.ApprovedBy = ticketUpdatedtos.ApprovedBy;
+            existingTicket.ApprovedBy = staff.StaffId;
             existingTicket.ApprovalDate = DateTime.Now;
             var result = await _ticketRepository.UpdateTicket(existingTicket);
             return result ? "Update Successfull" : "Update failed";
@@ -282,8 +288,6 @@ namespace Service
         {
             try
             {
-
-
                 List<TicketResponse> ticketResponse = new List<TicketResponse>();
                 var listTicket = await _ticketRepository.GetAllTickets();
                 {
@@ -319,7 +323,7 @@ namespace Service
                                 CategoryName = category.CategoryName,
                                 PdfFile = item.PdfFile,
                                 Status = item.Status,
-                                PostedAt = item.PostedAt,
+                                PostedAt = item.PostedAt ,
                                 ApprovedBy = staff?.User?.Username ?? "Unknown",
                                 ApprovalDate = item.ApprovalDate,
                                 Description = item.Description,
@@ -338,5 +342,6 @@ namespace Service
             }
         }
         #endregion
+
     }
 }

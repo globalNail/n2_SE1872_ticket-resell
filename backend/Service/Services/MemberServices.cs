@@ -13,21 +13,24 @@ namespace Service.Services
     public class MemberServices: IMemberServices
     {
         private readonly IMemberRepository _memberRepository;
+        private readonly IUserRepository _userRepository;
 
-        public MemberServices(IMemberRepository memberRepository)
+        public MemberServices(IMemberRepository memberRepository, IUserRepository userRepository)
         {
             _memberRepository = memberRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<string> AddMember(MemberDtos memberDtos)
+        public async Task<string> AddMember(int userId)
         {
-            if (memberDtos == null)
+            var user = _userRepository.GetUserById(userId);
+            if (user == null)
             {
-                return "Data is null here. Please enter data";
+                return "User Not found";
             }
             Member member = new Member()
             {
-                UserId = memberDtos.UserId,
+                UserId = userId,
                 AverageRating = null,
                 RatingCount = null,
                 MembershipDate = null,

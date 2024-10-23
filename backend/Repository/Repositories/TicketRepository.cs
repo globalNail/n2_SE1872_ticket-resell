@@ -17,7 +17,7 @@ public class TicketRepository : ITicketRepository
 
     public async Task<List<Ticket>> GetAllTickets()
     {
-        return await _context.Tickets.ToListAsync();
+        return await _context.Tickets.OrderByDescending(sc => sc.ModifiedDate).ToListAsync();
     }
 
     public async Task<int> CountTicket()

@@ -21,7 +21,7 @@ namespace API.Controllers
 
         //ADD
         [HttpPost]
-        public async Task<IActionResult> AddTicket([FromBody]TicketDtos ticketDtos)
+        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
         {
             if (ModelState.IsValid)
             {
@@ -131,13 +131,13 @@ namespace API.Controllers
         }
 
         [HttpPut("Staff")]
-        public async Task<IActionResult> UpdateTicketByStaff([Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicketByStaff(int staffId, [Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {
                 try
                 {               
-                    var result = await _services.UpdateTicketForStaff(id, ticketUpdatedtos);
+                    var result = await _services.UpdateTicketForStaff(staffId, id, ticketUpdatedtos);
                     return Ok(result);
                 }
                 catch (Exception ex)

@@ -19,13 +19,15 @@ public class AuthService : IAuthService
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IMemberServices _memberServices;
 
-    public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
+    public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IMemberServices memberServices)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _configuration = configuration;
         _passwordHasher = new PasswordHasher<User>();
+        _memberServices = memberServices;
     }
 
     public async Task<AuthResponseDTO> RegisterAsync(RegisterDTO registerDto)
@@ -51,7 +53,6 @@ public class AuthService : IAuthService
 
         await _unitOfWork.UserRepository.AddAsync(user);
         await _unitOfWork.SaveChangesAsync();
-
         var token = await GenerateJwtToken(user);
 
         return new AuthResponseDTO
@@ -78,7 +79,7 @@ public class AuthService : IAuthService
         }
 
         var token = await GenerateJwtToken(user);
-
+        await _memberServices.AddMember(user.UserId);
         return new AuthResponseDTO
         {
             Token = token,

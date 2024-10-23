@@ -17,6 +17,6 @@ namespace Service.Interface
         Task<string> AddTicket(TicketDtos ticketDtos);
         Task DeleteTicket(int ticketId);
         Task<string> UpdateTicket(int ticketId, TicketUpdatedtos ticketUpdatedtos);
-        Task<string> UpdateTicketForStaff(int ticketId, TicketStaffDtos ticketUpdatedtos);
+        Task<string> UpdateTicketForStaff(int staffId, int ticketId, TicketStaffDtos ticketUpdatedtos);
     }
 }
