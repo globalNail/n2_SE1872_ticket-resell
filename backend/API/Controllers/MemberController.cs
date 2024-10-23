@@ -74,13 +74,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMember(MemberDtos memberDtos)
+        public async Task<IActionResult> AddMember(int userId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _services.AddMember(memberDtos);
+                    var result = await _services.AddMember(userId);
                     if (result == null)
                     {
                         return StatusCode(500, "Failed to add the member");

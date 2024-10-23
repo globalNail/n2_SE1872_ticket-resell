@@ -19,6 +19,10 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        //ADD
+        [HttpPost]
+        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
+
         /// <summary>
         /// Lấy danh sách tất cả các ticket hoặc lọc theo categoryId
         /// GET: api/Tickets?categoryId=1
@@ -27,6 +31,7 @@ namespace API.Controllers
         /// <returns>Danh sách tickets</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TicketReadDto>>> GetTickets([FromQuery] int? categoryId)
+
         {
             IEnumerable<Ticket> tickets;
 
@@ -158,13 +163,14 @@ namespace API.Controllers
         }
 
         [HttpPut("Staff")]
-        public async Task<IActionResult> UpdateTicketByStaff([Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicketByStaff(int staffId, [Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {
                 try
-                {
-                    var result = await _services.UpdateTicketForStaff(id, ticketUpdatedtos);
+                {               
+                    var result = await _services.UpdateTicketForStaff(staffId, id, ticketUpdatedtos);
+
                     return Ok(result);
                 }
                 catch (Exception ex)

@@ -13,7 +13,7 @@ namespace Service.Interface
         Task<List<Member>> GetAllMember();
         Task<Member> GetMember(int id);
         Task DeleteMember(int id);
-        Task<string> AddMember(MemberDtos memberDtos);
+        Task<string> AddMember(int userId);
         Task<string> UpdateMember(int id, MemberRequest memberRequest);
     }
 }
