@@ -13,6 +13,7 @@ namespace Service.Interface
         Task<List<TicketResponse>> GetAllTicket();
         Task<IEnumerable<Ticket>> GetAllTicketsAsync();
         Task<IEnumerable<Ticket>> GetTicketsByCategoryAsync(int categoryId);
+        Task<List<TicketResponse>> GetAllTicketForStaff();
         Task<TicketResponse> GetTicketById(int ticketId);
         Task<int> CountTicket();
         Task<string> AddTicket(TicketDtos ticketDtos);

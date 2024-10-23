@@ -46,7 +46,7 @@ namespace API.Controllers
 
         #region Add
         [HttpPost]
-        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
+        public async Task<IActionResult> AddTicket([FromBody]TicketDtos ticketDtos)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +91,29 @@ namespace API.Controllers
   //       }
   // #endregion
 
+        [HttpGet("Staff")]
+        public async Task<IActionResult> GetAllTicketsForStaff()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.GetAllTicketForStaff();
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
+
+        }
+
         [HttpGet("id")]
         public async Task<IActionResult> GetTicketById([Required] int ticketId)
         {
@@ -116,7 +139,7 @@ namespace API.Controllers
 
         // UPDATE
         [HttpPut]
-        public async Task<IActionResult> UpdateTicket(int id, TicketUpdatedtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicket([Required] int id, [FromBody] TicketUpdatedtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +158,7 @@ namespace API.Controllers
         }
 
         [HttpPut("Staff")]
-        public async Task<IActionResult> UpdateTicketByStaff(int id, TicketStaffDtos ticketUpdatedtos)
+        public async Task<IActionResult> UpdateTicketByStaff([Required] int id, [FromBody] TicketStaffDtos ticketUpdatedtos)
         {
             if (ModelState.IsValid)
             {

@@ -100,11 +100,16 @@ namespace Service
         }
 
         #endregion
+
+        #region Count Ticket
         public async Task<int> CountTicket()
         {
            return await _ticketRepository.CountTicket();
         }
 
+        #endregion
+
+        #region Delete Ticket
         public async Task DeleteTicket(int ticketId)
         {
             try
@@ -120,6 +125,7 @@ namespace Service
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
 
         #region GetAll Ticket
         public async Task<List<TicketResponse>> GetAllTicket()
@@ -231,6 +237,7 @@ namespace Service
         }
         #endregion
 
+        #region Update Ticket
         public async Task<string> UpdateTicket(int ticketId, TicketUpdatedtos ticketUpdatedtos)
         {
             if (ticketId == null || ticketId == 0)
@@ -254,7 +261,9 @@ namespace Service
             var result = await _ticketRepository.UpdateTicket(existingTicket);
             return result ? "Update Successfull" : "Update failed";
         }
+        #endregion
 
+        #region Update Ticket for Staff
         public async Task<string> UpdateTicketForStaff(int ticketId, TicketStaffDtos ticketUpdatedtos)
         {
 
@@ -278,5 +287,68 @@ namespace Service
             return result ? "Update Successfull" : "Update failed";
 
         }
+        #endregion
+
+        #region GetAll Ticket for Staff
+        public async Task<List<TicketResponse>> GetAllTicketForStaff()
+        {
+            try
+            {
+
+
+                List<TicketResponse> ticketResponse = new List<TicketResponse>();
+                var listTicket = await _ticketRepository.GetAllTickets();
+                {
+                    foreach (var item in listTicket)
+                    {
+                        var ticket = await _ticketRepository.GetTicketsById(item.TicketId);
+                        if (ticket == null)
+                        {
+                            throw new Exception($"ticket not found");
+                        }
+                        var category = await _categoryRepository.GetCategoryById(ticket.CategoryId);
+                        if (category == null)
+                        {
+                            throw new Exception($"category not found");
+                        }
+                        var member = await _memberRepository.GetMember(ticket.SellerId);
+                        if (member == null)
+                        {
+                            throw new Exception($"member not found");
+                        }
+                        var staff = await _staffRepository.GetStaffById(ticket.ApprovedBy);
+                        if (item.Quantity > 0 && item.Status == "Pending")
+                        {
+                            var newTicket = new TicketResponse()
+                            {
+                                TicketId = item.TicketId,
+                                Barcode = item.Barcode,
+                                Quantity = item.Quantity,
+                                Price = item.Price,
+                                SeatNumber = item.SeatNumber,
+                                StartDate = item.StartDate,
+                                SellerName = member?.User?.Username ?? "Unknown",
+                                CategoryName = category.CategoryName,
+                                PdfFile = item.PdfFile,
+                                Status = item.Status,
+                                PostedAt = item.PostedAt,
+                                ApprovedBy = staff?.User?.Username ?? "Unknown",
+                                ApprovalDate = item.ApprovalDate,
+                                Description = item.Description,
+                                ModifiedDate = item.ModifiedDate,
+
+                            };
+                            ticketResponse.Add(newTicket);
+                        }
+                    }
+                    return ticketResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
     }
 }
