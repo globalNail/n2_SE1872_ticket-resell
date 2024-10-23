@@ -29,6 +29,10 @@ public class TicketRepository : ITicketRepository
     {
         return await _context.Tickets.FirstOrDefaultAsync(sc => sc.TicketId.Equals(Id));
     }
+    public async Task<Ticket> VerifyTicket(string Barcode, int categoryId)
+    {
+        return await _context.Tickets.FirstOrDefaultAsync(sc => sc.Barcode.Equals(Barcode) && sc.CategoryId.Equals(categoryId));
+    }
 
     public async Task<bool> AddTicket(Ticket ticket)
     {

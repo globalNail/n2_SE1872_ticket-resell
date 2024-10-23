@@ -19,9 +19,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        //ADD
-        [HttpPost]
-        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
 
         /// <summary>
         /// Lấy danh sách tất cả các ticket hoặc lọc theo categoryId
@@ -49,9 +46,10 @@ namespace API.Controllers
         }
         //CRUD
 
-        #region Add
+        //ADD
         [HttpPost]
-        public async Task<IActionResult> AddTicket([FromBody]TicketDtos ticketDtos)
+        public async Task<IActionResult> AddTicket(TicketDtos ticketDtos)
+        #region Add
         {
             if (ModelState.IsValid)
             {
@@ -68,33 +66,30 @@ namespace API.Controllers
             return BadRequest(ModelState);
 
         }
-  #endregion
-        //Read
-  //
-  //       #region GetAllTickets
-  //       [HttpGet()]
-  //       public async Task<IActionResult> GetAllTickets()
-  //       {
-  //           if (ModelState.IsValid)
-  //           {
-  //               try
-  //               {
-  //                   var result = await _services.GetAllTicket();
-  //                   if (result == null)
-  //                   {
-  //                       return NotFound();
-  //                   }
-  //                   return Ok(result);
-  //               }
-  //               catch (Exception ex)
-  //               {
-  //                   return StatusCode(500, $"An error occurred: {ex.Message}");
-  //               }
-  //           }
-  //           return BadRequest(ModelState);
-  //
-  //       }
-  // #endregion
+        #endregion
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _services.GetAllTicket();
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"An error occurred: {ex.Message}");
+                }
+            }
+            return BadRequest(ModelState);
+
+        }
 
         [HttpGet("Staff")]
         public async Task<IActionResult> GetAllTicketsForStaff()

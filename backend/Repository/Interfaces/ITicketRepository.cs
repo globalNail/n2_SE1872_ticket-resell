@@ -11,6 +11,7 @@ namespace Repository.Interfaces
     {
         Task<List<Ticket>> GetAllTickets();
         Task<IEnumerable<Ticket>> GetByCategoryIdAsync(int categoryId);
+        Task<Ticket> VerifyTicket(string Barcode, int categoryId);
         Task<Ticket?> GetTicketsById(int Id);
         Task<int> CountTicket();
         Task<bool> AddTicket(Ticket ticket);
