@@ -6,16 +6,10 @@ const TicketForm = ({
     handleSubmit,
     loading,
     error,
-    categories,
-    loadingCategories,
-    errorCategories,
 }) => {
     return (
         <div>
             {error && <div className="mb-4 text-red-500">{error}</div>}
-            {errorCategories && (
-                <div className="mb-4 text-red-500">{errorCategories}</div>
-            )}
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
                 {/* Barcode */}
                 <div className="mb-4">
@@ -25,7 +19,7 @@ const TicketForm = ({
                     <input
                         type="text"
                         name="Barcode"
-                        value={formData.Barcode}
+                        value={formData.barcode}
                         onChange={handleChange}
                         required
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
@@ -40,7 +34,7 @@ const TicketForm = ({
                     <input
                         type="number"
                         name="Price"
-                        value={formData.Price}
+                        value={formData.price}
                         onChange={handleChange}
                         required
                         step="0.01"
@@ -54,7 +48,7 @@ const TicketForm = ({
                     <input
                         type="number"
                         name="Quantity"
-                        value={formData.Quantity}
+                        value={formData.quantity}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                     />
@@ -66,7 +60,7 @@ const TicketForm = ({
                     <input
                         type="text"
                         name="SeatNumber"
-                        value={formData.SeatNumber}
+                        value={formData.seatNumber}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                     />
@@ -78,38 +72,25 @@ const TicketForm = ({
                     <input
                         type="datetime-local"
                         name="StartDate"
-                        value={formData.StartDate}
+                        value={formData.startDate}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
-                {/* Category ID (Dropdown) */}
+                {/* Category Name (Text Input) */}
                 <div className="mb-4">
                     <label className="block text-white">
-                        Category<span className="text-red-500">*</span>
+                        Category Name<span className="text-red-500">*</span>
                     </label>
-                    {loadingCategories ? (
-                        <div className="text-gray-500">Loading categories...</div>
-                    ) : (
-                        <select
-                            name="CategoryId"
-                            value={formData.CategoryId}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((category) => (
-                                <option
-                                    key={category.CategoryId}
-                                    value={category.CategoryId}
-                                >
-                                    {category.Name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
+                    <input
+                        type="text"
+                        name="categoryName"
+                        value={formData.categoryName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                    />
                 </div>
 
                 {/* Pdf File */}
@@ -129,7 +110,7 @@ const TicketForm = ({
                     <label className="block text-white">Description</label>
                     <textarea
                         name="Description"
-                        value={formData.Description}
+                        value={formData.description}
                         onChange={handleChange}
                         rows="4"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"

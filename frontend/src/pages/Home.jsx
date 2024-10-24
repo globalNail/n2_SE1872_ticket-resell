@@ -83,6 +83,17 @@ function Home() {
                     <button className="ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Search
                     </button>
+                      {/* Cart Button */}
+                 {/* Add Cart and TicketCard Button */}
+                 <div className="mt-4">
+                        <Link to="/cart">
+                            <button className="mr-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                Cart
+                            </button>
+                        </Link>
+
+                    
+                    </div>
                 </div>
             </div>
 

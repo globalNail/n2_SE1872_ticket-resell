@@ -15,6 +15,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/login/Login"; // Import Login page
 import TicketsPage from "./pages/tickets/TicketsPage"; // Import TicketListPage
 import UploadTicketPage from "./pages/tickets/UploadTicketPage";
+import TicketCard from "./components/tickets/TicketCard";
+
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -46,6 +48,7 @@ function App() {
                                     </ProtectedRoute>
                                 }
                             />
+                            <Route path="/cart" element={<TicketCard />} />
 
                             <Route
                                 path="/staff-approval"

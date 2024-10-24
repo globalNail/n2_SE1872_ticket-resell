@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react"; 
+import React, { useState, useContext } from "react";  
 import ticketApi from "../../api/ticketApi";
 import { useNavigate } from "react-router-dom";
-import useFetchCategories from "../../hooks/useFetchCategories";
 import TicketForm from "../../components/tickets/TicketForm";
 import { AuthContext } from "../../contexts/AuthContext"; // Import context để lấy thông tin đăng nhập
 import UploadTicket from "../../assets/images/uploadticket.jpg";
@@ -14,7 +13,7 @@ const UploadTicketPage = () => {
         Quantity: "",
         SeatNumber: "",
         StartDate: "",
-        CategoryId: "",
+        categoryName: "", // Người dùng nhập vào category
         PdfFile: null,
         Description: "",
     });
@@ -22,9 +21,6 @@ const UploadTicketPage = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-
-    // Sử dụng custom hook để fetch categories
-    const { categories, loadingCategories, errorCategories } = useFetchCategories();
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -48,15 +44,15 @@ const UploadTicketPage = () => {
 
         // Tạo FormData để gửi dữ liệu cùng file
         const data = new FormData();
-        data.append("Barcode", formData.Barcode);
-        data.append("Price", formData.Price);
-        data.append("Quantity", formData.Quantity || "");
-        data.append("SeatNumber", formData.SeatNumber || "");
-        data.append("StartDate", formData.StartDate || "");
-        data.append("SellerId", user.id); // Lấy SellerID từ thông tin đăng nhập
-        data.append("CategoryId", formData.CategoryId); // Đảm bảo CategoryId được chọn
+        data.append("Barcode", formData.barcode);
+        data.append("Price", formData.price);
+        data.append("Quantity", formData.quantity || "");
+        data.append("SeatNumber", formData.seatNumber || "");
+        data.append("StartDate", formData.startDate || "");
+        data.append("SellerId", formData.sellerName); // Lấy SellerID từ thông tin đăng nhập
+        data.append("categoryName", formData.categoryName); // Đảm bảo categoryName được chọn
         if (formData.PdfFile) {
-            data.append("PdfFile", formData.PdfFile);
+            data.append("PdfFile", formData.pdfFile);
         }
         // Đặt mặc định Status là 'Pending' nếu status sẽ được cập nhật sau khi kiểm duyệt
         data.append("Status", "Pending");
@@ -90,9 +86,6 @@ const UploadTicketPage = () => {
                     handleSubmit={handleSubmit}
                     loading={loading}
                     error={error}
-                    categories={categories}
-                    loadingCategories={loadingCategories}
-                    errorCategories={errorCategories}
                 />
             </div>
         </div>

@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const ticketApi = {
     getAllTickets: () => {
-        const url = "/Ticket";
+        const url = "/Ticket/GetAll";
         return axiosClient.get(url);
     },
     getTicketById: (id) => {
