@@ -99,7 +99,7 @@ const TicketForm = ({
                     <input
                         type="file"
                         name="PdfFile"
-                        accept=".pdf"
+                        accept=".jpg,.jpeg"
                         onChange={handleChange}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                     />

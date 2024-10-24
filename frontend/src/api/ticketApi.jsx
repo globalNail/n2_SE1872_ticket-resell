@@ -9,9 +9,9 @@ const ticketApi = {
         const url = `/Ticket/${id}`;
         return axiosClient.get(url);
     },
-    createTicket: (ticketData) => {
-        const url = "/Ticket";
-        return axiosClient.post(url, ticketData, {
+    createTicket: (ticketData, formData) => {
+        const url = `/Ticket?Barcode=${ticketData.Barcode}&Price=${ticketData.Price}&Quantity=${ticketData.Quantity}&SeatNumber=${ticketData.SeatNumber}&StartDate=${ticketData.StartDate}&categoryName=${ticketData.categoryName}&Description=${ticketData.Description}`
+        return axiosClient.post(url, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

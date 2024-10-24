@@ -21,14 +21,21 @@ const UploadTicketPage = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-
+         
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === "PdfFile") {
-            setFormData((prev) => ({
-                ...prev,
-                [name]: files[0],
-            }));
+            const file = files[0];
+            // Validate file type (allow PDF, JPG, and JPEG)
+            const validFileTypes = ["application/pdf", "image/jpeg", "image/jpg"];
+            if (file && validFileTypes.includes(file.type)) {
+                setFormData((prev) => ({
+                    ...prev,
+                    [name]: file,
+                }));
+            } else {
+                setError("Invalid file type. Please upload a PDF, JPG, or JPEG file.");
+            }
         } else {
             setFormData((prev) => ({
                 ...prev,
@@ -36,7 +43,6 @@ const UploadTicketPage = () => {
             }));
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -44,24 +50,18 @@ const UploadTicketPage = () => {
 
         // Tạo FormData để gửi dữ liệu cùng file
         const data = new FormData();
-        data.append("Barcode", formData.barcode);
-        data.append("Price", formData.price);
-        data.append("Quantity", formData.quantity || "");
-        data.append("SeatNumber", formData.seatNumber || "");
-        data.append("StartDate", formData.startDate || "");
-        data.append("SellerId", formData.sellerName); // Lấy SellerID từ thông tin đăng nhập
-        data.append("categoryName", formData.categoryName); // Đảm bảo categoryName được chọn
         if (formData.PdfFile) {
-            data.append("PdfFile", formData.pdfFile);
+            data.append("File", formData.PdfFile);
         }
         // Đặt mặc định Status là 'Pending' nếu status sẽ được cập nhật sau khi kiểm duyệt
-        data.append("Status", "Pending");
-        data.append("Description", formData.Description || "");
-
+         console.log(formData);
         try {
-            await ticketApi.createTicket(data);
-            // Điều hướng hoặc thông báo thành công
-            navigate("/tickets"); // Điều hướng đến trang danh sách ticket
+            const response =  await ticketApi.createTicket(formData, data);
+            if (response.data ==="Add Successful") {
+
+                // Điều hướng hoặc thông báo thành công
+                navigate("/tickets"); // Điều hướng đến trang danh sách ticket
+            }
         } catch (err) {
             setError(err.response?.data?.message || "Error uploading ticket");
         } finally {
